@@ -3,4 +3,10 @@ dot files
 
 This is just here to help me move between machines.
 
-It may or may not be useful to you.
+inspired by aniero's fu. (http://github.com/aniero/dotfiles)
+
+
+use it
+------
+
+ `python install.py`

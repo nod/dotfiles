@@ -1,0 +1,6 @@
+on run argv
+	repeat with i from 1 to (count argv)
+		set macpath to POSIX file (item i of argv) as alias
+		tell application "Finder" to open information window of macpath
+	end repeat
+end

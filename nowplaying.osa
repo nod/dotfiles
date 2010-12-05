@@ -1,0 +1,10 @@
+tell application "iTunes"
+  if player state is playing then
+    -- get track, artist and album
+    set currtrack to the name of current track
+    set currartist to the artist of current track
+    -- show track, artist
+    set songinfo to ("/me is listening to " & currtrack & " by " & currartist )
+    set output to songinfo
+  end if
+end tell
