@@ -3,6 +3,9 @@
 # get me some vim cmd line luvin
 set -o vi
 
+# api keys, etc
+source ~/.secrets
+
 export PYTHONSTARTUP=$HOME/Code/dotfiles/pythonrc.py
 
 # git related shellery
