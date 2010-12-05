@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/Users/jeremy/Desktop/android-sdk-mac_x86-1.6_r1'
+let g:netrw_dirhist_2='/Users/jeremy/Work'
+let g:netrw_dirhist_3='/Users/jeremy/Work/back'
