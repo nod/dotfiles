@@ -7,14 +7,22 @@ from sys import stderr
 
 home = expanduser(environ['HOME'])
 
-for f in glob('*'):
-    if any((f.startswith(x) for x in ('README', 'install', 'tags'))): continue
-    target = normpath(join(home, '.%s'%f))
+def install_sym(src, target):
     if exists(target):
-        print >>stderr, "skipping %s, already exists" % f
+        print >>stderr, "skipping %s, already exists" % target
     else:
-        src = normpath(join(getcwd(), f))
         print "installing %s to %s" % (src, target)
         symlink(src, target)
 
+for f in glob('*'):
+    if any((f.startswith(x) for x in ('README', 'install', 'tags'))): continue
+    target = normpath(join(home, '.%s'%f))
+    src = normpath(join(getcwd(), f))
+    install_sym(src, target)
+
+# we need a symlink for our ssh stuff.
+# for now, just hardcode it to ~/.secrets/ssh
+ssh_dir =  normpath(join(home, '.ssh'))
+src = normpath(join(home, ".secrets/ssh"))
+install_sym(src, ssh_dir)
 
