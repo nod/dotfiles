@@ -6,11 +6,11 @@ set -o vi
 # api keys, etc
 source ~/.secrets
 
-export PYTHONSTARTUP=$HOME/Code/dotfiles/pythonrc.py
+export PYTHONSTARTUP=$HOME/.pythonrc.py
 
 # git related shellery
 export GIT_PS1_SHOWDIRTYSTATE=1
-source ~/Code/dotfiles/git-completion.bash
+source ~/.scriptdir/git-completion.bash
 
 # this shows a colorized git repo dirty state
 export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(__git_ps1 "(%s)")\[\033[00m\]\$ '
@@ -42,7 +42,7 @@ alias colorslist="set | egrep 'COLOR_\w*'" # Lists all colors
 # OSX related aliases
 # #######################################
 
-$APPLESCRIPT_DIR = "~/Code/dotfiles/applescripts"
+export APPLESCRIPT_DIR=$HOME/.applescripts
 
 alias mvim="open -a MacVim"
 
