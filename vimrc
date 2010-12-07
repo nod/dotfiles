@@ -5,11 +5,10 @@ set vb " shhhh
 :syntax on
 
 if has("gui_running")
-	:color ir_black
+	:color wombat
     set guioptions=egmrt
 else
-	:color ir_black
-	":color coffee
+	:color wombat
 endif
 
 set sw=4 sts=4 ts=4
