@@ -53,3 +53,6 @@ alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy"
 # give me a "show info" from teh cmd line
 alias i="osascript ${APPLESCRIPT_DIR}/info.osa > /dev/null 2>&1"
 
+# mount disk image
+alias crypt_on="hdid /Volumes/iDisk/Documents/crypt.dmg && cd /Volumes/Crypt"
+alias crypt_off="cd && hdiutil detach /Volumes/Crypt"
