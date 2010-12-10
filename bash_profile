@@ -4,7 +4,9 @@
 set -o vi
 
 # api keys, etc
-source ~/.secrets/secrets
+if [ -z ~/.secrets/secrets ]; then
+	source ~/.secrets/secrets
+fi
 
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 
