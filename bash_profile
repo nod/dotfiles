@@ -1,5 +1,8 @@
 # my custom bash goodness
 
+# get our personal helpers
+export PATH=$PATH:$HOME/.bin
+
 # get me some vim cmd line luvin
 set -o vi
 
@@ -38,9 +41,12 @@ export COLOR_LIGHT_GRAY='\e[0;37m'
 export CLICOLOR=1
 
 alias colorslist="set | egrep 'COLOR_\w*'" # Lists all colors
-alias ls="ls -F"
 alias l="ls -lrtF"
 alias ll="ls -lF"
+
+alias wgetff='wget --random-wait --wait 2 --mirror --no-parent -U "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"'
+alias wgetie='wget --mirror --no-parent -U "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727)"'
+alias wgetmac='wget --random-wait --wait 2 --mirror --no-parent -U "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_2; en-gb)"'
 
 
 # #######################################
