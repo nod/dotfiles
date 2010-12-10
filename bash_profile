@@ -1,5 +1,10 @@
 # my custom bash goodness
 
+# anything local?
+if [ -e $HOME/.bashrc ]; then
+	source $HOME/.bashrc
+fi
+
 # get our personal helpers
 export PATH=$PATH:$HOME/.bin
 
@@ -7,7 +12,7 @@ export PATH=$PATH:$HOME/.bin
 set -o vi
 
 # api keys, etc
-if [ -z ~/.secrets/secrets ]; then
+if [ -e ~/.secrets/secrets ]; then
 	source ~/.secrets/secrets
 fi
 
