@@ -62,6 +62,8 @@ export APPLESCRIPT_DIR=$HOME/.applescripts
 
 alias mvim="open -a MacVim"
 
+alias gitx="open -a GitX"
+
 # itunes related aliases
 alias np="osascript ${APPLESCRIPT_DIR}/nowplaying.osa"
 alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy"
