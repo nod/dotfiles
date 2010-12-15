@@ -1,8 +1,7 @@
 
 
-import traceback
-
-def new_print_exc(cls, *a, **ka):
+def _tb():
+    import traceback
     from pygments import highlight
     from pygments.lexers import PythonTracebackLexer
     from pygments.formatters import TerminalFormatter
@@ -23,10 +22,6 @@ def new_print_exc(cls, *a, **ka):
         TerminalFormatter )
     sys.stdout = old_stdout
     sys.stderr = old_stderr
-    sys.stdout.write('I AM HERE\n\n\n\n\n')
     sys.stdout.write(text_out)
-    sys.stderr.write('I AM HERE\n\n\n\n\n')
     sys.stderr.write(text_err)
-
-traceback.print_exc = new_print_exc
 
