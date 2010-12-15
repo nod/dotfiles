@@ -73,3 +73,15 @@ alias i="osascript ${APPLESCRIPT_DIR}/info.osa > /dev/null 2>&1"
 alias crypt_on="hdid -readonly /Volumes/iDisk/Documents/crypt.dmg && cd /Volumes/Crypt"
 alias crypt_edit="hdid -readwrite /Volumes/iDisk/Documents/crypt.dmg && cd /Volumes/Crypt"
 alias crypt_off="cd && hdiutil detach /Volumes/Crypt"
+
+
+# pip bash completion start
+_pip_completion()
+{
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                   COMP_CWORD=$COMP_CWORD \
+                   PIP_AUTO_COMPLETE=1 $1 ) )
+}
+complete -o default -F _pip_completion pip
+# pip bash completion end
+
