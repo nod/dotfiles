@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+from random import choice, randint
+from string import punctuation
+
+dwfile = "/Users/jeremy/Code/bin/dw.list"
+
+punc = punctuation.replace('\\','')
+punc = punc.replace('/','')
+punc = punc.replace('"','')
+punc = punc.replace("'",'')
+
+def choose_words(howmany=None):
+	if not howmany: howmany = randint(2,6)
+	assert isinstance(howmany, int)
+	dwlist = [ x.split()[1] for x in open(dwfile).readlines()]
+	return [choice(dwlist) for x in xrange(1,howmany)]
+
+def genphrase():
+	words = choose_words()
+	print ' '.join(words)
+	x = randint(0,len(words)-1)
+	words[x] = words[x].replace(choice(words[x]), choice(punc))
+	print choice(punc).join(words)
+
+if __name__ == '__main__':
+	genphrase()

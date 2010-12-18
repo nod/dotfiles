@@ -1,10 +1,18 @@
 # my custom bash goodness
 
+# anything local?
+if [ -e $HOME/.bashrc ]; then
+	source $HOME/.bashrc
+fi
+
+# get our personal helpers
+export PATH=$PATH:$HOME/.bin
+
 # get me some vim cmd line luvin
 set -o vi
 
 # api keys, etc
-if [ -z ~/.secrets/secrets ]; then
+if [ -e ~/.secrets/secrets ]; then
 	source ~/.secrets/secrets
 fi
 
@@ -38,9 +46,13 @@ export COLOR_LIGHT_GRAY='\e[0;37m'
 export CLICOLOR=1
 
 alias colorslist="set | egrep 'COLOR_\w*'" # Lists all colors
-alias ls="ls -F --color"
+alias ls="ls --color"
 alias l="ls -lrtF --color"
 alias ll="ls -lF --color"
+
+alias wgetff='wget --random-wait --wait 2 --mirror --no-parent -U "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"'
+alias wgetie='wget --random-wait --wait 2 --mirror --no-parent -U "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727)"'
+alias wgetmac='wget --random-wait --wait 2 --mirror --no-parent -U "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_2; en-gb)"'
 
 
 # #######################################
@@ -50,6 +62,8 @@ alias ll="ls -lF --color"
 export APPLESCRIPT_DIR=$HOME/.applescripts
 
 alias mvim="open -a MacVim"
+
+alias gitx="open -a GitX"
 
 # itunes related aliases
 alias np="osascript ${APPLESCRIPT_DIR}/nowplaying.osa"
@@ -62,3 +76,15 @@ alias i="osascript ${APPLESCRIPT_DIR}/info.osa > /dev/null 2>&1"
 alias crypt_on="hdid -readonly /Volumes/iDisk/Documents/crypt.dmg && cd /Volumes/Crypt"
 alias crypt_edit="hdid -readwrite /Volumes/iDisk/Documents/crypt.dmg && cd /Volumes/Crypt"
 alias crypt_off="cd && hdiutil detach /Volumes/Crypt"
+
+
+# pip bash completion start
+_pip_completion()
+{
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                   COMP_CWORD=$COMP_CWORD \
+                   PIP_AUTO_COMPLETE=1 $1 ) )
+}
+complete -o default -F _pip_completion pip
+# pip bash completion end
+
