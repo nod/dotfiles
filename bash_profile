@@ -38,9 +38,9 @@ export COLOR_LIGHT_GRAY='\e[0;37m'
 export CLICOLOR=1
 
 alias colorslist="set | egrep 'COLOR_\w*'" # Lists all colors
-alias ls="ls -F"
-alias l="ls -lrtF"
-alias ll="ls -lF"
+alias ls="ls -F --color"
+alias l="ls -lrtF --color"
+alias ll="ls -lF --color"
 
 
 # #######################################
