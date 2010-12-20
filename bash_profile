@@ -54,6 +54,9 @@ alias wgetie='wget --mirror --no-parent -U "Mozilla/4.0 (compatible; MSIE 6.0; W
 alias wgetmac='wget --random-wait --wait 2 --mirror --no-parent -U "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_2; en-gb)"'
 
 
+# set my timezone to central
+export TZ=CST6CDT
+
 # #######################################
 # OSX related aliases
 # #######################################
