@@ -72,8 +72,9 @@ alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy"
 alias i="osascript ${APPLESCRIPT_DIR}/info.osa > /dev/null 2>&1"
 
 # mount disk image
-alias crypt_on="hdid -readonly /Volumes/iDisk/Documents/crypt.dmg && cd /Volumes/Crypt"
-alias crypt_edit="hdid -readwrite /Volumes/iDisk/Documents/crypt.dmg && cd /Volumes/Crypt"
+dmg_loc=/Volumes/iDisk/Documents/crypt.dmg
+alias crypt_on="hdid -readonly ${dmg_loc} && cd /Volumes/Crypt"
+alias crypt_edit="hdid -readwrite ${dmg_loc} && cd /Volumes/Crypt"
 alias crypt_off="cd && hdiutil detach /Volumes/Crypt"
 
 
