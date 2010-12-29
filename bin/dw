@@ -3,7 +3,8 @@
 from random import choice, randint
 from string import punctuation
 
-dwfile = "/Users/jeremy/Code/bin/dw.list"
+from os import environ
+dwfile = environ['HOME'] + "/.bin/dw.list"
 
 punc = punctuation.replace('\\','')
 punc = punc.replace('/','')
