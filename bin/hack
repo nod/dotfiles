@@ -1,9 +1,5 @@
 #!/bin/sh -x
 # git name-rev is fail
-CURRENT=`git branch | grep '\*' | awk '{print $2}'`
-git checkout master
-git pull origin master
-git checkout ${CURRENT}
-# git rebase master
-git merge master
-git pull origin ${CURRENT}
+CURRENT=`git branch | awk '$1 ~ /^*/ {print $2}'` || exit $?
+git checkout master && git pull origin master
+git checkout ${CURRENT} && git merge master && git pull origin ${CURRENT}
