@@ -5,7 +5,8 @@ set vb " shhhh
 :syntax on
 
 if has("gui_running")
-	:color wombat
+	" :color wombat
+	:color vibrantink
     set guioptions=egmrt
 else
 	:color wombat
