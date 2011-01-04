@@ -1,5 +1,45 @@
 #!/bin/sh -x
-# git name-rev is fail
+#
+# hack is a git workflow enhancer script that brings changes into the
+# current development / feature branch.  it's based on concepts found
+# here:
+# 
+#   http://reinh.com/blog/2008/08/27/hack-and-and-ship.html
+#
+# Usage:
+#
+#   hack [name-of-remote] [branch-to-merge-from]
+#
+
+# assume our remote is origin unless otherwise specified on the command
+# line
+REMOTE=${1:-origin}
+
+# assume our branch to merge from is master unless otherwise specified
+# on the command line
+MASTER=${2:-master}
+
+# get the current branch name.  this is assumed to be a development
+# branch (ie, not MASTER)
 CURRENT=`git branch | awk '$1 ~ /^*/ {print $2}'` || exit $?
-git checkout master && git pull origin master
-git checkout ${CURRENT} && git merge master && git pull origin ${CURRENT}
+
+# make sure MASTER branch is up to date
+git checkout $MASTER && git pull $REMOTE $MASTER
+
+# make sure we end up back on the CURRENT branch even if the pull of
+# MASTER fails.  this helps prevent accidental commits to the MASTER
+# branch.
+git checkout $CURRENT || exit $?
+
+# merge changes from MASTER into the CURRENT branch
+git merge $MASTER
+
+# XXX - which is preferable?  merge changes from master, then merge
+# changes from the remote branch?  or vice versa?
+
+# if CURRENT is tracking a remote branch, then we should pull in any
+# changes from the remote branch as well. (assumes that the local and
+# remote branch names are the same.)
+if git branch -r | grep -q " $REMOTE/$CURRENT$" ; then
+	git pull $REMOTE $CURRENT
+fi
