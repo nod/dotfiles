@@ -50,7 +50,7 @@ def main():
     if 'TMP33' not in environ: passwd = raw_input('tmp33 password? ')
     else: passwd = environ['TMP33']
     for f in argv[1:]:
-        print "%-13s -> %s" % (f[:13], upload_file(f, passwd))
+        print upload_file(f, passwd)
 
 
 if __name__ == '__main__':
