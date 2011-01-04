@@ -3,7 +3,7 @@
 # hack is a git workflow enhancer script that brings changes into the
 # current development / feature branch.  it's based on concepts found
 # here:
-# 
+#
 #   http://reinh.com/blog/2008/08/27/hack-and-and-ship.html
 #
 # Usage:
