@@ -69,7 +69,7 @@ alias gitx="open -a GitX"
 
 # itunes related aliases
 alias np="osascript ${APPLESCRIPT_DIR}/nowplaying.osa"
-alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy"
+alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy && pbpaste"
 
 # give me a "show info" from teh cmd line
 alias i="osascript ${APPLESCRIPT_DIR}/info.osa > /dev/null 2>&1"
