@@ -12,5 +12,28 @@ def blinkto(uri):
 	conn.request('PUT', '/', params, headers)
 	return json.loads(conn.getresponse().read()).get('uri')
 
-for x in sys.argv[1:]:
-	print blinkto(x)
+
+def main():
+
+	if len(sys.argv) == 1 or sys.argv[1] == "-h":
+		print >>sys.stderr, "usage: bto uri uri ..."
+		print >>sys.stderr, """
+Generates out a blink.to shortened URL for each argument.
+options:
+	-     read from stdin instead of arguments
+	-h    this cruft.
+examples:
+	bto http://33ad.org
+	echo http://33ad.org | bto -
+"""
+
+		return
+
+	if sys.argv[1] == "-": inp = sys.stdin
+	else: inp = sys.argv[1:]
+
+	for x in inp:
+		print blinkto(x)
+
+
+if __name__ == '__main__': main()
