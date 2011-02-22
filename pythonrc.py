@@ -1,3 +1,10 @@
+import atexit
+import os.path
+
+import rlcompleter
+import readline
+if 'libedit' in readline.__doc__: # on osx with bogus built readline lib
+    readline.parse_and_bind ("bind ^I rl_complete")
 
 
 def _tb():
