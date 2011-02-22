@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 
-"""
-Uploads files to 33ad/tmp via the command line.
+"""usage: %prog [options] file1 <file2>
 
-USAGE
-=====
-tmp33 file1 file2 ...
+Uploads files to 33ad/tmp via the command line.
 
 CONFIGURATION
 =============
@@ -14,6 +11,7 @@ upload password. If that doesn't exist, the password will be requested via
 prompt.
 """
 
+
 from lib33 import upload_file
 from lib33 import blinkto
 
@@ -21,16 +19,32 @@ usage = __doc__
 
 def main():
     from os import environ
-    from sys import argv
-    if len(argv) < 2 or argv[1] == "-h":
-        print usage
-        return
+    from sys import argv, stderr
+    from optparse import OptionParser
 
-    if 'TMP33' not in environ: passwd = raw_input('tmp33 password? ')
-    else: passwd = environ['TMP33']
+    parser = OptionParser(usage)
 
-    blinktmp33 = 'BLINKTMP33' in environ
-    for f in argv[1:]:
+    parser.add_option("-b", "--blinkto", dest="blinkto", action="store_true", default=False,
+         help=("shorten all urls through blink.to. "
+            "The existence of BLINKTMP33 environment var also sets this.") )
+    parser.add_option("-p", "--password", dest="password",default=False,
+         help="tmp33 password. The TMP33 environment var will be checked if this isn't set.")
+
+    (options, args) = parser.parse_args()
+
+    if len(args) == 0:
+        parser.print_help()
+        exit()
+
+    if options.password: passwd = options.passwd
+    elif 'TMP33' in environ: passwd = environ['TMP33']
+    else:
+        print >>stderr, "Password required. See --help"
+        exit()
+
+    blinktmp33 = options.blinkto or 'BLINKTMP33' in environ
+
+    for f in args:
         uri = upload_file(f, passwd)
         print blinkto(uri) if blinktmp33 else uri
 
