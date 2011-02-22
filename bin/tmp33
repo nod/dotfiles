@@ -14,32 +14,10 @@ upload password. If that doesn't exist, the password will be requested via
 prompt.
 """
 
-
-import pycurl
-
-from json import loads as json_loads
-import StringIO
+from lib33 import upload_file
+from lib33 import blinkto
 
 usage = __doc__
-
-def upload_file(fpath, passwd):
-    out = StringIO.StringIO()
-    c = pycurl.Curl()
-    c.setopt(pycurl.WRITEFUNCTION, out.write)
-    c.setopt(c.POST, True)
-    c.setopt(c.URL, "https://33ad.org/tmp/up")
-    c.setopt(c.HTTPPOST, [
-        ("human", passwd),
-        ("submit", "tmp it."),
-        ("json", "1"),
-        ("upfile", (c.FORM_FILE, fpath)),
-        ] )
-    c.perform()
-    c.close()
-
-    ret = json_loads(out.getvalue())
-    return ret.get('uri')
-
 
 def main():
     from os import environ
@@ -47,10 +25,14 @@ def main():
     if len(argv) < 2 or argv[1] == "-h":
         print usage
         return
+
     if 'TMP33' not in environ: passwd = raw_input('tmp33 password? ')
     else: passwd = environ['TMP33']
+
+    blinktmp33 = 'BLINKTMP33' in environ
     for f in argv[1:]:
-        print upload_file(f, passwd)
+        uri = upload_file(f, passwd)
+        print blinkto(uri) if blinktmp33 else uri
 
 
 if __name__ == '__main__':

@@ -1,17 +1,7 @@
 #!/usr/bin/python
 
-import httplib
-import json
 import sys
-from urllib import urlencode
-
-def blinkto(uri):
-	headers = {'Content-type':'application/x-www-form-urlencoded', 'Accept':'text/plain'}
-	params = urlencode({'uri':uri})
-	conn = httplib.HTTPConnection('blink.to')
-	conn.request('PUT', '/', params, headers)
-	return json.loads(conn.getresponse().read()).get('uri')
-
+from lib33 import blinkto
 
 def main():
 
@@ -34,6 +24,5 @@ examples:
 
 	for x in inp:
 		print blinkto(x)
-
 
 if __name__ == '__main__': main()
