@@ -31,4 +31,3 @@ def _tb():
     sys.stderr = old_stderr
     sys.stdout.write(text_out)
     sys.stderr.write(text_err)
-
