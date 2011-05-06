@@ -11,6 +11,8 @@
 settings_dev.py
 build
 
+vim/tags/*
+
 *.pbxuser
 *.perspective
 *.perspectivev3

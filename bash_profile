@@ -53,6 +53,9 @@ alias wgetff='wget --random-wait --wait 2 --mirror --no-parent -U "Mozilla/5.0 (
 alias wgetie='wget --random-wait --wait 2 --mirror --no-parent -U "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727)"'
 alias wgetmac='wget --random-wait --wait 2 --mirror --no-parent -U "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_2; en-gb)"'
 
+# pip command line completion is nice too
+which pip >/dev/null 2>&1 && eval "`pip completion --bash`"
+
 
 # set my timezone to central
 export TZ=CST6CDT
