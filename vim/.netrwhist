@@ -1,6 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/Users/jeremy/Desktop/android-sdk-mac_x86-1.6_r1'
-let g:netrw_dirhist_2='/Users/jeremy/Work'
-let g:netrw_dirhist_3='/Users/jeremy/Work/back'
-let g:netrw_dirhist_4='/Users/jeremy/Work/bs/back/views/uimodules'

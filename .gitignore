@@ -11,6 +11,8 @@
 settings_dev.py
 build
 
+vim/.netrwhist
+
 *.pbxuser
 *.perspective
 *.perspectivev3
