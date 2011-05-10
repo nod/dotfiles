@@ -12,6 +12,7 @@ settings_dev.py
 build
 
 vim/.netrwhist
+vim/tags/*
 
 *.pbxuser
 *.perspective
