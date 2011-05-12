@@ -22,6 +22,7 @@ set sw=4 sts=4 ts=4
 :au BufEnter *.html   set sw=2 sts=2 ts=2 et
 
 :au BufEnter *.java set sw=4 sts=4 et ai
+:au BufEnter *.js set sw=2 sts=2 et ai
 
 augroup mkd
   autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
