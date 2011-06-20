@@ -94,3 +94,20 @@ _pip_completion()
 complete -o default -F _pip_completion pip
 # pip bash completion end
 
+
+# virtualenv
+
+vw=`which virtualenvwrapper.sh 2>/dev/null`
+if [[ -n "$vw" ]] ; then
+	export PIP_RESPECT_VIRTUALENV=true
+	export WORKON_HOME=$HOME/Work/virtualenv
+	source "$vw"
+	export PIP_VIRTUALENV_BASE=$WORKON_HOME
+fi
+
+alias mve="mkvirtualenv --no-site-packages"
+
+
+
+
+
