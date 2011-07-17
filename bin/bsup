@@ -99,10 +99,30 @@ def send_url(curl, domain, docid):
     html = out.getvalue()
     soup = BeautifulSoup(html)
     link = soup.find('input', id='bs_link')
-    return link['value']
+    send_id = soup.find('input', id='sendid')
+    return (link['value'], send_id['value'])
 
 
-def blinksend_upload(domain, user, passwd, filename, verbose=False):
+def email_notification(curl, domain, send_id, notify=True):
+    out = StringIO.StringIO()
+    curl.setopt(pycurl.WRITEFUNCTION, out.write)
+    curl.setopt(curl.POST, True)
+    url = "%s/api/send/notify/%s" % (
+            domain,
+            send_id)
+    curl.setopt(curl.URL, str(url))
+    curl.setopt(curl.HTTPPOST, [
+        ("notify", str(notify).lower()),
+        ] )
+    curl.perform()
+
+    data = json.loads(out.getvalue())
+    if data['status'] != "ok":
+        print >>sys.stderr, "failed to set email notification to %s",notify
+
+
+def blinksend_upload(domain, user, passwd, filename,
+        notify=True, verbose=False):
     """all the steps necessary to upload a given file to blinksend"""
     c = pycurl.Curl()
     cookie_file = tempfile.NamedTemporaryFile()
@@ -114,11 +134,11 @@ def blinksend_upload(domain, user, passwd, filename, verbose=False):
     blinksend_login(c, domain, user, passwd)
     docid = create_docid(c, domain, os.path.basename(filename))
     upload_file(c, domain, docid, filename)
-    url = send_url(c, domain, docid)
+    url, send_id = send_url(c, domain, docid)
+    email_notification(c, domain, send_id, notify=notify)
 
     cookie_file.close()
     return url
-
 
 def main():
     from optparse import OptionParser
@@ -138,6 +158,11 @@ def main():
             help=("blinksend password."
                 " BLINKSEND_PASSWD environment variable will be used"
                 " if this is not set.")
+            )
+
+    parser.add_option("-N", "--no-notify", dest="notify",
+            action="store_false", default=True,
+            help=("dont send email notification when viewed")
             )
 
     parser.add_option("-S", "--no-ssl", dest="ssl",
@@ -170,7 +195,7 @@ def main():
 
     for filename in args:
         print blinksend_upload(domain, user, passwd,
-                filename, verbose=options.verbose)
+                filename, notify=options.notify, verbose=options.verbose)
 
 
 if __name__ == "__main__":

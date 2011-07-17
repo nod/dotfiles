@@ -56,6 +56,20 @@ alias wgetmac='wget --random-wait --wait 2 --mirror --no-parent -U "Mozilla/5.0 
 # pip command line completion is nice too
 which pip >/dev/null 2>&1 && eval "`pip completion --bash`"
 
+# A bash completion script for Fabric targets
+# Author: Michael Dippery <mdippery@gmail.com>
+
+_complete_fabric() {
+  COMPREPLY=()
+  if [ -e ./fabfile.py ]; then
+    local targets=$(grep 'def [a-z].*' ./fabfile.py | sed -e 's/^def //g' -e 's/(.*)://g')
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${targets}" -- ${cur}) )
+  fi
+}
+complete -o bashdefault -o default -F _complete_fabric fab
+
+
 
 # set my timezone to central
 export TZ=CST6CDT
