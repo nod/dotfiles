@@ -123,5 +123,53 @@ alias mve="mkvirtualenv --no-site-packages"
 
 
 
+# helpers from troy on working with github pull reqs
+
+function delp {
+    # delete git pull request branch
+    br=$(git branch | awk '$1=="*" {print $2; exit}')
+    if ! echo "$br" | egrep -q '^pull-[0-9]+$'; then
+        echo "\"$br\" is not a pull request branch" >&2
+        return 1
+    fi
+    git checkout master
+    git branch -D "$br"
+}
+
+function gitdir_top {
+    w=$(git rev-parse --git-dir)
+    if [[ -n $w ]] ; then
+        echo "$w/.."
+    fi
+}
+
+function git_upstream {
+    # which remote name represents the current repo's upstream
+    # if there's one named "upstream" pick that one, otherwise, default
+    # to "origin".
+    git remote | fgrep upstream || echo origin
+}
+
+function pullr {
+    # pullr : run tests against a pull request
+    # given a pull request number, merge the pull request with master,
+    # and run testcases.  when finished, if all tests pass, optionally
+    # remove the pull request branch.
+    pullreq=${1?}
+    delpull=$2  # any value deletes pull request branch on passed tests
+    (cd $(gitdir_top) &&  # git pulls has to be done at the top
+        git co master &&  # make sure we're on master
+        git pull $(git_upstream) master && # make sure we're up-to-date
+        git pulls update &&
+        gh fetch-pull $pullreq merge &&
+        fab test)
+    rc=$?
+    if [[ $rc -eq 0 ]] && [[ -n "$delpull" ]] ; then
+        delp
+        rc=$?
+    fi
+    return $rc
+}
+
 
 

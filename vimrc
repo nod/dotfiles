@@ -6,7 +6,8 @@ set vb " shhhh
 :syntax on
 
 if has("gui_running")
-	:color zenburn
+	" :color zenburn
+	:color solarized
 	" let g:zenburn_force_dark_Background=1
     set guioptions=egmrt
 else
