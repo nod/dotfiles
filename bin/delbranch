@@ -1,0 +1,11 @@
+#!/bin/bash
+# thanks to @nxin for the first version.  I added some minor usage to this one.
+
+branchname=${1}
+
+if [ ${branchname}x == x ] ; then
+	echo usage: "${0##*/} <branchname>" >&2
+	exit
+fi
+
+git br -d ${branchname} && git push origin :${branchname}
