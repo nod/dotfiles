@@ -6,8 +6,9 @@ set vb " shhhh
 :syntax on
 
 if has("gui_running")
-	" :color zenburn
-	:color solarized
+    set background=dark
+	:color zenburn
+	" :color solarized
 	" let g:zenburn_force_dark_Background=1
     set guioptions=egmrt
 else
@@ -28,6 +29,8 @@ set sw=4 sts=4 ts=4
 augroup mkd
   autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
 augroup END
+
+"filetype plugin on
 
 let python_highlight_all = 1
 
