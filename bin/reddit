@@ -1,0 +1,55 @@
+#!/usr/bin/env python
+
+import re
+from os import path, system
+from urllib import urlopen
+from zlib import adler32
+
+from BeautifulSoup import BeautifulStoneSoup
+
+fpath = path.expanduser("~/.redditurls")
+
+def go(subreddit, limit=25):
+
+    if not path.exists(fpath):
+        with open(fpath, "w") as newf:
+            newf.write('')
+
+    srch = re.compile('.+(https?://[a-zA-Z0-9./?=_-]+).+?\[link\]')
+    soup = BeautifulStoneSoup(urlopen(
+        'http://www.reddit.com/r/{}/.rss'.format(subreddit)
+        ))
+
+    for i in soup.findAll('item', limit=limit):
+        descr = i.description.text
+        url = srch.search(descr).groups()[0]
+        csum = adler32(url)
+
+        f = open(fpath)
+        if str(csum)+'\n' not in f:
+            f.close()
+            with open(fpath, 'a') as f:
+				print >>f, csum
+            system('open -a Safari "{}"'.format(url))
+
+def usage():
+
+    print """reddit [-c <count>] <SUBREDDIT> [SUBREDDIT...]"""
+
+
+if __name__ == '__main__':
+
+    import sys
+    import getopt
+
+    try:
+        opt, subreddits = getopt.getopt(sys.argv[1:], 'c:')
+        assert(subreddits)
+        limit = int(opt[0][1]) if opt else 25
+    except:
+        usage()
+        raise SystemExit
+
+    for subr in subreddits:
+        go(subr, limit)
+
