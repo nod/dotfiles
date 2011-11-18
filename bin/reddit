@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import re
-from os import path, system
+from os import path
+from subprocess import Popen
 from urllib import urlopen
 from zlib import adler32
 
@@ -33,7 +34,9 @@ def go(subreddit, limit, new):
             f.close()
             f = open(fpath, 'a')
             print >>f, csum
-            system('open -a Safari "{}"'.format(url))
+            cmd = 'open -a Safari {}'.format(url)
+            p = Popen((cmd.split()))
+            p.wait()
         f.close()
 
 
