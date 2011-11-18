@@ -33,8 +33,8 @@ def go(subreddit, limit, new):
             f.close()
             f = open(fpath, 'a')
             print >>f, csum
-            f.close()
             system('open -a Safari "{}"'.format(url))
+        f.close()
 
 
 def usage():
