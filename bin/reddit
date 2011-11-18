@@ -9,15 +9,18 @@ from BeautifulSoup import BeautifulStoneSoup
 
 fpath = path.expanduser("~/.redditurls")
 
-def go(subreddit, limit=25):
+DEFAULT_LIMIT = 25
+
+def go(subreddit, limit, new):
 
     if not path.exists(fpath):
         with open(fpath, "w") as newf:
             newf.write('')
 
+    cat = '' if not new else 'new/' # use hash table for others
     srch = re.compile('.+(https?://[a-zA-Z0-9./?=_-]+).+?\[link\]')
     soup = BeautifulStoneSoup(urlopen(
-        'http://www.reddit.com/r/{}/.rss'.format(subreddit)
+        'http://www.reddit.com/r/{}/{}.rss'.format(subreddit, cat)
         ))
 
     for i in soup.findAll('item', limit=limit):
@@ -28,13 +31,14 @@ def go(subreddit, limit=25):
         f = open(fpath)
         if str(csum)+'\n' not in f:
             f.close()
-            with open(fpath, 'a') as f:
-				print >>f, csum
+            f = open(fpath, 'a')
+            print >>f, csum
+            f.close()
             system('open -a Safari "{}"'.format(url))
 
-def usage():
 
-    print """reddit [-c <count>] <SUBREDDIT> [SUBREDDIT...]"""
+def usage():
+    print """reddit [-n -c <count>] <SUBREDDIT> [SUBREDDIT...]"""
 
 
 if __name__ == '__main__':
@@ -42,14 +46,18 @@ if __name__ == '__main__':
     import sys
     import getopt
 
+    limit, new = DEFAULT_LIMIT, False
+
     try:
-        opt, subreddits = getopt.getopt(sys.argv[1:], 'c:')
+        opt, subreddits = getopt.getopt(sys.argv[1:], 'nc:')
         assert(subreddits)
-        limit = int(opt[0][1]) if opt else 25
+        for o,a in opt:
+            if o == '-c': limit = int(a)
+            if o == '-n': new = True
     except:
         usage()
         raise SystemExit
 
     for subr in subreddits:
-        go(subr, limit)
+        go(subr, limit, new) # use kwargs
 
