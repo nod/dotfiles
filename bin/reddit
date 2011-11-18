@@ -6,7 +6,11 @@ from subprocess import Popen
 from urllib import urlopen
 from zlib import adler32
 
-from BeautifulSoup import BeautifulStoneSoup
+try:
+	from BeautifulSoup import BeautifulStoneSoup
+except ImportError:
+	print "you need to install BeautifulSoup. Exiting"
+	raise SystemExit
 
 fpath = path.expanduser("~/.redditurls")
 
@@ -24,6 +28,8 @@ def go(subreddit, limit, new):
         'http://www.reddit.com/r/{}/{}.rss'.format(subreddit, cat)
         ))
 
+
+    new_count = 0
     for i in soup.findAll('item', limit=limit):
         descr = i.description.text
         url = srch.search(descr).groups()[0]
@@ -34,10 +40,13 @@ def go(subreddit, limit, new):
             f.close()
             f = open(fpath, 'a')
             print >>f, csum
-            cmd = 'open -a Safari {}'.format(url)
+            cmd = 'open {}'.format(url)
             p = Popen((cmd.split()))
             p.wait()
+            new_count += 1
         f.close()
+    if new_count:
+        print "opened {} new links".format(new_count)
 
 
 def usage():
