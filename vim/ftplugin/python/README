@@ -1,0 +1,24 @@
+py_test
+-------
+
+copy these files to ~/.vim/ftplugin/python
+ - py_test.vim
+ - README
+ - py_test/py_test.py
+ - py_test/filtercwd.py
+
+add "filetype plugin on" to ~/.vimrc
+
+restart vim
+
+vim /path/to/test_file.py
+
+put your cursor inside the body of a test method
+
+\m will run that testcase
+
+\t will run all tests in that file
+
+use \q to view test output in the quickfix window. (\q again to dismiss
+the quickfix window)
+

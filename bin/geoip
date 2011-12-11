@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+"""
+geoip.py
+
+Use the http://www.maxmind.com/app/geolitecity database and api to
+convert ip addresses into approximate city/state locations.
+
+Download the database monthly:
+
+  curl -O http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+  # leave the .gz so that wget -N knows whether to re-download or not
+  gunzip < GeoLiteCity.dat.gz > GeoLiteCity.dat
+
+Install MaxMind's pygeoip module:
+
+  sudo pip install pygeoip
+"""
+
+import pygeoip
+import os,sys
+import pprint
+import socket
+#sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
+#from blinkshared.models import Location
+
+gic = None
+
+def maxmind_config():
+    global gic
+
+    if not gic:
+        geoip_db = "/Users/jeremy/tmp/GeoLiteCity.dat"
+        gic = pygeoip.GeoIP(geoip_db)
+
+    return gic
+
+
+def maxmind_by_ipaddr(ipaddr):
+    """convert the given ipaddr to an approximate location"""
+    gic = maxmind_config()
+    rec = gic.record_by_addr(ipaddr)
+    try:
+        hostname = socket.gethostbyaddr(ipaddr)[0]
+    except socket.herror:
+        hostname = "<unknown>"
+    rec.update({'hostname':hostname})
+    return rec
+
+
+if __name__ == "__main__":
+    import sys
+    for ipaddr in sys.argv[1:]:
+        pprint.pprint( maxmind_by_ipaddr(ipaddr) )
