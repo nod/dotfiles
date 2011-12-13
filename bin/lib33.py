@@ -20,7 +20,7 @@ def upload_file(fpath, passwd):
     c = pycurl.Curl()
     c.setopt(pycurl.WRITEFUNCTION, out.write)
     c.setopt(c.POST, True)
-    c.setopt(c.URL, "https://33ad.org/tmp/up")
+    c.setopt(c.URL, "http://33ad.org/tmp/up")
     c.setopt(c.HTTPPOST, [
         ("human", passwd),
         ("submit", "tmp it."),
