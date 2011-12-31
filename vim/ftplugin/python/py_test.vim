@@ -154,11 +154,8 @@ endfunction
 
 "-------------------------------------------------------------------------
 " Run the unittests of the file in the current buffer
-nnoremap <silent> <leader>t :python run_python_tests(external=0)<cr>
-"nnoremap <silent> <leader>T :python run_python_tests(external=1)<cr>
+nnoremap <silent> <leader>f :python run_python_tests(external=0)<cr>
 
 "-------------------------------------------------------------------------
 " Run the single test method under the text cursor
-nnoremap <silent> <leader>m :python run_single_test_method(external=0)<cr>
-"nnoremap <silent> <leader>M :python run_single_test_method(external=1)<cr>
-
+nnoremap <silent> <leader>t :python run_single_test_method(external=0)<cr>
