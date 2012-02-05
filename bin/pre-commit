@@ -11,10 +11,21 @@ ENDC='\033[0m'
 
 cd ./$(git rev-parse --show-cdup)
 result=$(mktemp -t precom)
+changed_all=$(git diff --name-only --diff-filter=AM --staged | grep '.py$')
 changed_py=$(git diff --name-only --diff-filter=AM --staged | grep '.py$')
 changed_js=$(git diff --name-only --diff-filter=AM --staged | grep -E '(.js|.html)$')
 
-[[ -z $changed_py && -z $changed_js ]] && exit 0
+echo -en ${HEADER}checking trailing whitespace ...
+if grep -HEn ' +$' $changed_all > $result
+then
+    status=1 # so easy to fix, just stop now
+    echo -e ${FAIL} fail
+    echo -e ${ENDC}---------------
+    cat $result
+    echo ---------------
+else
+    echo -e $OKBLUE good $ENDC
+fi
 
 echo -en ${HEADER}checking requirements.txt ...
 if pip freeze -r requirements.txt 2>&- >&-
