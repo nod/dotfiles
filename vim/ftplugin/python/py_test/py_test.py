@@ -54,6 +54,29 @@ def run_single_test_method(external):
     _run_unittest(dotted_method_name, external, verbose=True)
 
 
+def run_single_test_class(external):
+    '''
+    Runs the single test class currently under the text cursor
+    '''
+    if vim.current.buffer.name is None:
+        print 'Not a file'
+        return
+
+    current_file = relpath(vim.current.buffer.name)
+    current_line_no = vim.current.window.cursor[0] - 1
+
+    # find the names of the test class under the cursor
+    _, klass = _find_prior_matching_line(current_line_no, test_class_re)
+    if klass is None:
+        vim.command("""call RedBar("Can't find test class")""")
+        return
+
+    # create command of the form
+    # nosetests -s package1.package2.module.class
+    dotted_method_name = '%s:%s' % (current_file, klass)
+    _run_unittest(dotted_method_name, external, verbose=True)
+
+
 def _filename_to_module(filename):
     pathname = splitext( splitdrive(filename)[1] )[0]
     return pathname.replace(sep, '.')

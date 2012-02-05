@@ -159,3 +159,7 @@ nnoremap <silent> <leader>f :python run_python_tests(external=0)<cr>
 "-------------------------------------------------------------------------
 " Run the single test method under the text cursor
 nnoremap <silent> <leader>t :python run_single_test_method(external=0)<cr>
+
+"-------------------------------------------------------------------------
+" Run tests in a single test class
+nnoremap <silent> <leader>c :python run_single_test_class(external=0)<cr>

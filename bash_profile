@@ -6,7 +6,9 @@ if [ -e $HOME/.bashrc ]; then
 fi
 
 # get our personal helpers
-export PATH=$PATH:$HOME/.bin
+
+MDBPATH="~/Work/mongodb-osx-x86_64-1.8.3/bin"
+export PATH=$MDBPATH:$PATH:$HOME/.bin
 
 # get me some vim cmd line luvin
 set -o vi
