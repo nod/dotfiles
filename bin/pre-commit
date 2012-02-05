@@ -1,0 +1,90 @@
+#!/bin/bash
+
+
+HEADER='\033[95m'
+OKBLUE='\033[34m'
+OKGREEN='\033[32m'
+WARNING='\033[93m'
+FAIL='\033[91m'
+ENDC='\033[0m'
+
+
+cd ./$(git rev-parse --show-cdup)
+result=$(mktemp -t precom)
+changed_py=$(git diff --name-only --diff-filter=AM --staged | grep '.py$')
+changed_js=$(git diff --name-only --diff-filter=AM --staged | grep -E '(.js|.html)$')
+
+[[ -z $changed_py && -z $changed_js ]] && exit 0
+
+echo -en ${HEADER}checking requirements.txt ...
+if pip freeze -r requirements.txt 2>&- >&-
+then
+    status=0 # don't die for this, just warn.
+    echo -e ${WARNING} warning
+    echo
+else
+    echo -e $OKBLUE good $ENDC
+fi
+
+echo -en ${HEADER}checking for print statements ...
+if grep -HEn '^ *print' $changed_py > $result
+then
+    status=0
+    echo -e ${FAIL} warning
+    echo -e ${ENDC}---------------
+    cat $result
+    echo ---------------
+    echo
+else
+    echo -e $OKBLUE good $ENDC
+fi
+
+echo -en ${HEADER}checking files with pyflakes ...
+if ! pyflakes $changed_py > $result
+then
+    status=0 # just warn
+    echo -e ${FAIL} warning
+    echo -e ${ENDC}---------------
+    cat $result
+    echo -e ${ENDC}---------------
+    echo
+else
+    echo -e $OKBLUE good $ENDC
+fi
+
+echo -en ${HEADER}checking for js console.log statements ...
+if grep -HEn 'console.log' $changed_js > $result
+then
+    status=1
+    echo -e ${FAIL} failed
+    echo -e ${ENDC}---------------
+    cat $result
+    echo ---------------
+    echo
+else
+    echo -e $OKBLUE good $ENDC
+fi
+
+echo -en ${HEADER}checking for js debugger statements ...
+if grep -HEn 'debugger' $changed_js > $result
+then
+    status=1
+    echo -e ${FAIL} failed
+    echo -e ${ENDC}---------------
+    cat $result
+    echo ---------------
+    echo
+else
+    echo -e $OKBLUE good $ENDC
+fi
+
+rm -f $result
+
+if [[ $status != 0 ]]
+then
+    echo
+    echo -e ${FAIL}NOT COMMITTING.
+    echo -e commit with -n to ignore tests ${ENDC}
+    echo
+fi
+exit $status
