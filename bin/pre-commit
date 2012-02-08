@@ -15,6 +15,8 @@ changed_all=$(git diff --name-only --diff-filter=AM --staged | grep '.py$')
 changed_py=$(git diff --name-only --diff-filter=AM --staged | grep '.py$')
 changed_js=$(git diff --name-only --diff-filter=AM --staged | grep -E '(.js|.html)$')
 
+status=0
+
 echo -en ${HEADER}checking trailing whitespace ...
 if grep -HEn ' +$' $changed_all > $result
 then
@@ -91,7 +93,7 @@ fi
 
 rm -f $result
 
-if [[ $status != 0 ]]
+if [[ "$status" != "0" ]]
 then
     echo
     echo -e ${FAIL}NOT COMMITTING.
