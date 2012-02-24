@@ -100,4 +100,4 @@ then
     echo -e commit with -n to ignore tests ${ENDC}
     echo
 fi
-exit $status
+exit
