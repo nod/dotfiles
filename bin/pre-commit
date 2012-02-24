@@ -92,14 +92,3 @@ else
 fi
 
 rm -f $result
-
-if [[ "$status" != "0" ]]
-then
-    echo
-    echo -e ${FAIL}NOT COMMITTING.
-    echo -e commit with -n to ignore tests ${ENDC}
-    echo
-fi
-
-
-
