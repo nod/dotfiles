@@ -78,6 +78,19 @@ else
     echo -e $OKBLUE good $ENDC
 fi
 
+echo -en ${HEADER}checking for painfully long lines ...
+if grep -HEn '^.{160}' $changed_py $changed_js > $result
+then
+    status=0 # just warn
+    echo -e ${FAIL} warning
+    echo -e ${ENDC}---------------
+    cat $result
+    echo ---------------
+    echo
+else
+    echo -e $OKBLUE good $ENDC
+fi
+
 echo -en ${HEADER}checking for js debugger statements ...
 if grep -HEn 'debugger' $changed_js > $result
 then
