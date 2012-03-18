@@ -91,6 +91,19 @@ else
     echo -e $OKBLUE good $ENDC
 fi
 
+echo -en ${HEADER}checking for js alert statements ...
+if grep -HEn 'alert' $changed_js > $result
+then
+    status=1
+    echo -e ${FAIL} failed
+    echo -e ${ENDC}---------------
+    cat $result
+    echo ---------------
+    echo
+else
+    echo -e $OKBLUE good $ENDC
+fi
+
 echo -en ${HEADER}checking for js debugger statements ...
 if grep -HEn 'debugger' $changed_js > $result
 then
