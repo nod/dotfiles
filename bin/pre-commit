@@ -11,69 +11,40 @@ ENDC='\033[0m'
 
 cd ./$(git rev-parse --show-cdup)
 result=$(mktemp -t precom)
-changed_all=$(git diff --name-only --diff-filter=AM --staged | grep '.py$')
 changed_py=$(git diff --name-only --diff-filter=AM --staged | grep '.py$')
 changed_js=$(git diff --name-only --diff-filter=AM --staged | grep -E '(.js|.html)$')
 
 status=0
 
-echo -en ${HEADER}checking trailing whitespace ...
-if grep -HEn ' +$' $changed_all > $result
-then
-    status=1 # so easy to fix, just stop now
-    echo -e ${FAIL} fail
-    echo -e ${ENDC}---------------
-    cat $result
-    echo ---------------
-else
-    echo -e $OKBLUE good $ENDC
-fi
+function show_err() {
+  result_file=$1
+  echo -e ${FAIL} FAILED
+  echo -e ${ENDC}
+  cat $result_file
+  echo ---------------
+}
 
-echo -en ${HEADER}checking requirements.txt ...
-if pip freeze -r requirements.txt 2>&- >&-
+
+echo -en ${HEADER}checking trailing whitespace ...
+if grep -HEn ' +$' $changed_py > $result
 then
-    status=0 # don't die for this, just warn.
-    echo -e ${WARNING} warning
-    echo
+  show_err $result
 else
-    echo -e $OKBLUE good $ENDC
+  echo -e $OKBLUE good $ENDC
 fi
 
 echo -en ${HEADER}checking for print statements ...
 if grep -HEn '^ *print' $changed_py > $result
 then
-    status=0
-    echo -e ${FAIL} warning
-    echo -e ${ENDC}---------------
-    cat $result
-    echo ---------------
-    echo
+  show_err $result
 else
-    echo -e $OKBLUE good $ENDC
+  echo -e $OKBLUE good $ENDC
 fi
 
 echo -en ${HEADER}checking files with pyflakes ...
 if ! pyflakes $changed_py > $result
 then
-    status=0 # just warn
-    echo -e ${FAIL} warning
-    echo -e ${ENDC}---------------
-    cat $result
-    echo -e ${ENDC}---------------
-    echo
-else
-    echo -e $OKBLUE good $ENDC
-fi
-
-echo -en ${HEADER}checking for js console.log statements ...
-if grep -HEn 'console.log' $changed_js > $result
-then
-    status=1
-    echo -e ${FAIL} failed
-    echo -e ${ENDC}---------------
-    cat $result
-    echo ---------------
-    echo
+  show_err $result
 else
     echo -e $OKBLUE good $ENDC
 fi
@@ -81,40 +52,19 @@ fi
 echo -en ${HEADER}checking for painfully long lines ...
 if grep -HEn '^.{160}' $changed_py $changed_js > $result
 then
-    status=0 # just warn
-    echo -e ${FAIL} warning
-    echo -e ${ENDC}---------------
-    cat $result
-    echo ---------------
-    echo
+  show_err $result
 else
     echo -e $OKBLUE good $ENDC
 fi
 
-echo -en ${HEADER}checking for js alert statements ...
-if grep -HEn 'alert' $changed_js > $result
-then
-    status=1
-    echo -e ${FAIL} failed
-    echo -e ${ENDC}---------------
-    cat $result
-    echo ---------------
-    echo
-else
-    echo -e $OKBLUE good $ENDC
-fi
-
-echo -en ${HEADER}checking for js debugger statements ...
-if grep -HEn 'debugger' $changed_js > $result
-then
-    status=1
-    echo -e ${FAIL} failed
-    echo -e ${ENDC}---------------
-    cat $result
-    echo ---------------
-    echo
-else
-    echo -e $OKBLUE good $ENDC
-fi
+for t in 'console.log' 'alert' 'debugger'; do
+  echo -en ${HEADER}checking for js $t statements ...
+  if grep -HEn "${t}" $changed_js > $result
+  then
+    show_err $result
+  else
+      echo -e $OKBLUE good $ENDC
+  fi
+done
 
 rm -f $result
