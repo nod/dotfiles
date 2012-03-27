@@ -28,7 +28,6 @@ def go(subreddit, limit, new):
         'http://www.reddit.com/r/{}/{}.rss'.format(subreddit, cat)
         ))
 
-
     new_count = 0
     for i in soup.findAll('item', limit=limit):
         descr = i.description.text
