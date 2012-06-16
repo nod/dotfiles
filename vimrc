@@ -14,6 +14,8 @@ set sw=4 sts=4 ts=4
 
 :syntax on
 
+:let mapleader = ","
+
 if has("gui_running")
 
 " ----------------  GUI ------------------------
@@ -23,6 +25,8 @@ set guioptions=egmrt
 
 filetype plugin indent on
 
+set colorcolumn=81
+set showcmd
 " --------------- end GUI -----------------
 
 else
@@ -52,6 +56,65 @@ function! SuperCleverTab()
 endfunction
 " inoremap <Tab> <C-R>=SuperCleverTab()<cr>
 nmap <Tab> <C-R>=SuperCleverTab()<cr>
+
+"http://stackoverflow.com/questions/9458076/swap-selection-around-a-pivot
+
+function! Swap(...) "{{{
+  let start_v = col("'<")
+  let end_v = col("'>")
+  let mv = ''
+  let isMv = 0
+  while !isMv
+    let char = s:GetChar()
+    if char == '<Esc>'
+      return ''
+    endif
+    let mv .= char
+    let isMv = s:IsMovement(mv)
+    echon mv."\r"
+  endwhile
+  if isMv == 2
+    return ''
+  endif
+  exec "normal! ".end_v.'|'.mv
+  let lhs = '\%'.start_v.'c\(.\{-}\S\)'
+  if !a:0
+    let pivot = '\(\s*\%'.(end_v).'c.\s*\)'
+  else
+    let pivot = '\(\s*'.a:1.'*\%'.(end_v).'c'.a:1.'\+\s*\)'
+  endif
+  let rhs = '\(.*\%#.\)'
+  exec 's/'.lhs.pivot.rhs.'/\3\2\1/'
+endfunction "Swap }}}
+
+function! s:GetChar() "{{{
+  let char = getchar()
+  if type(char) == type(0) && char < 33
+    return '<Esc>'
+  elseif char
+    let char = nr2char(char)
+  endif
+  return char
+endfunction "GetChar }}}
+
+function! s:IsMovement(mv) "{{{
+  let ft = a:mv =~ '^\C\d*[fFtT].$'
+  let ft_partial = a:mv =~ '^\C\d*\%([fFtT].\?\)\?$'
+  let right = a:mv =~ '^\d*[l$|;,]\|g[m$]$'
+  let right_partial = a:mv =~ '^\d*\%([l$|;,]\|g[m$]\?\)\?$'
+  if !right_partial && !ft_partial
+    return 2
+  endif
+  return ft || right
+endfunction "IsMovement2Right }}}
+
+" Use last char as pivot. e.g.: the comma in the given example.
+vmap <silent> <leader>s1 :<C-U>call Swap()<CR>
+" Use \S\+ (WORD) as pivot. e.g.: &&
+vmap <silent> <leader>ss :<C-U>call Swap('\S')<CR>
+" Use \w\+ as pivot.
+vmap <silent> <leader>sw :<C-U>call Swap('\w')<CR>
+
 
 " tab navigation like ffox
 nmap <S-tab> :tabprevious<cr>

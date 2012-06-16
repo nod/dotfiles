@@ -33,7 +33,7 @@ function s:ToggleQuickfix()
     endif
 endfunction
 
-nnoremap <silent> <leader>q :call <SID>ToggleQuickfix()<cr>
+nnoremap <silent> <Leader>q :call <SID>ToggleQuickfix()<cr>
 
 
 "-------------------------------------------------------------------------
@@ -78,6 +78,7 @@ function RunCommandInternal(command)
     call ReadFileIntoQuickfix(temp_file)
 endfunction
 
+
 function! JumpToError()
     let no_error = 1
     for error in getqflist()
@@ -95,6 +96,7 @@ function! JumpToError()
     endif
 endfunction
 
+
 function! RedBar(msg)
     echo
     redraw!
@@ -103,6 +105,7 @@ function! RedBar(msg)
     echom a:msg . repeat(" ",&columns - len(a:msg) - 2)
     echohl
 endfunction
+
 
 function! GreenBar(msg)
     echo
@@ -154,12 +157,12 @@ endfunction
 
 "-------------------------------------------------------------------------
 " Run the unittests of the file in the current buffer
-nnoremap <silent> <leader>f :python run_python_tests(external=0)<cr>
+nnoremap <silent> <Leader>f :python run_python_tests(external=0)<cr>
 
 "-------------------------------------------------------------------------
 " Run the single test method under the text cursor
-nnoremap <silent> <leader>t :python run_single_test_method(external=0)<cr>
+nnoremap <silent> <Leader>t :python run_single_test_method(external=0)<cr>
 
 "-------------------------------------------------------------------------
 " Run tests in a single test class
-nnoremap <silent> <leader>c :python run_single_test_class(external=0)<cr>
+nnoremap <silent> <Leader>c :python run_single_test_class(external=0)<cr>
