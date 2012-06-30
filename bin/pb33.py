@@ -1,14 +1,18 @@
 #!/usr/bin/env python
 
 """
-Copies text to 33ad.org/pb via the command line.
+Copies text to 33ad.org/pb via the command line or retrieves the raw text of a
+pastein if given a hash.
 
 USAGE
 =====
-pb33.py < file
-pb33.py file [ file ... ]
 
-pb33.py -g HASH
+  create new pastebin
+    pb33.py < file
+    pb33.py file [ file ... ]
+
+  retrieve existing pastebin contents
+    pb33.py -g HASH
 
 """
 
