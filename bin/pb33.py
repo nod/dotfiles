@@ -7,6 +7,9 @@ USAGE
 =====
 pb33.py < file
 pb33.py file [ file ... ]
+
+pb33.py -g HASH
+
 """
 
 
@@ -43,6 +46,12 @@ def filetype_hilite(data):
     return hilite
 
 
+def get(hash):
+    u = urllib.urlopen('http://33ad.org/pb/{}?raw=1'.format(hash))
+    print u.read()
+
+
+
 def pb(data):
     hilite = filetype_hilite(data)
     out = StringIO.StringIO()
@@ -72,15 +81,17 @@ def pb(data):
 def main():
     import sys,getopt
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "h")
+        opts, args = getopt.getopt(sys.argv[1:], "hg:")
     except getopt.GetoptError, err:
-        print str(err)
+        print >>sys.stderr, str(err)
         return 2
 
     for o,v in opts:
         if o == "-h":
             print usage
             return
+        if o == '-g':
+            return get(v)
 
     if not args:
         print pb(sys.stdin.read())
