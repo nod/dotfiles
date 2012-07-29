@@ -88,6 +88,8 @@ alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy && pbpaste"
 
 function sotd() {
 	songpath=`osascript ${APPLESCRIPT_DIR}/sotd.osa`
+	shortpath=${songpath##*/}
+	echo "Be patient... uploading: ${shortpath} " >&2
 	tmp33 "${songpath}"
 }
 
