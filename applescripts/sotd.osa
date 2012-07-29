@@ -1,0 +1,8 @@
+-- print out the currently playing song
+tell application "iTunes"
+  if player state is playing then
+    set songloc to get location of current track
+	set realpath to (the POSIX path of songloc)
+    set output to realpath
+  end if
+end tell

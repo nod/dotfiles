@@ -86,6 +86,11 @@ alias gitx="open -a GitX"
 alias np="osascript ${APPLESCRIPT_DIR}/nowplaying.osa"
 alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy && pbpaste"
 
+function sotd() {
+	songpath=`osascript ${APPLESCRIPT_DIR}/sotd.osa`
+	tmp33 "${songpath}"
+}
+
 # give me a "show info" from teh cmd line
 alias i="osascript ${APPLESCRIPT_DIR}/info.osa > /dev/null 2>&1"
 
