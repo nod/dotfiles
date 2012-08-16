@@ -52,7 +52,18 @@ alias l="ls -lrtF"
 alias ll="ls -lF"
 
 # pip command line completion is nice too
-which pip >/dev/null 2>&1 && eval "`pip completion --bash`"
+# which pip >/dev/null 2>&1 && eval "`pip completion --bash`"
+# pip bash completion start
+_pip_completion()
+{
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                   COMP_CWORD=$COMP_CWORD \
+                   PIP_AUTO_COMPLETE=1 $1 ) )
+}
+complete -o default -F _pip_completion pip
+# pip bash completion end
+
+
 
 # A bash completion script for Fabric targets
 # Author: Michael Dippery <mdippery@gmail.com>
@@ -97,7 +108,6 @@ function sotd() {
 alias i="osascript ${APPLESCRIPT_DIR}/info.osa > /dev/null 2>&1"
 
 # mount disk image
-dmg_loc=/Volumes/iDisk/Documents/crypt.dmg
 alias crypt_on="hdid -readonly ${dmg_loc} && cd /Volumes/Crypt"
 alias crypt_edit="hdid -readwrite ${dmg_loc} && cd /Volumes/Crypt"
 alias crypt_off="cd && hdiutil detach /Volumes/Crypt"
