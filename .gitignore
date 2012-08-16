@@ -31,3 +31,7 @@ vim/tags/*
 *.mov
 
 secrets
+
+# it's only a model! (really a symlink)
+bin/tig
+
