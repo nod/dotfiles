@@ -3,6 +3,7 @@
 from glob import glob
 from os import environ, getcwd, symlink
 from os.path import exists, expanduser, join, normpath
+from platform import system
 from sys import stderr
 
 home = expanduser(environ['HOME'])
@@ -15,9 +16,16 @@ def install_sym(src, target):
         symlink(src, target)
 
 for f in glob('*'):
-    if any((f.startswith(x) for x in ('README', 'install', 'tags'))): continue
+    if any((f.startswith(x) for x in ('tig', 'README', 'install', 'tags'))):
+        continue
     target = normpath(join(home, '.%s'%f))
     src = normpath(join(getcwd(), f))
+    install_sym(src, target)
+
+# install a symlink to tig if we're on osx
+if 'Darwin' == system():
+    target = normpath(join(home, '.bin/tig'))
+    src = normpath(join(getcwd(), 'bin/tig-osx'))
     install_sym(src, target)
 
 # we need a symlink for our ssh stuff.

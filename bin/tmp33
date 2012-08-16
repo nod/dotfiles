@@ -13,7 +13,6 @@ prompt.
 
 
 from lib33 import upload_file
-from lib33 import blinkto
 
 usage = __doc__
 
@@ -24,10 +23,9 @@ def main():
 
     parser = OptionParser(usage)
 
-    parser.add_option("-b", "--blinkto", dest="blinkto", action="store_true", default=False,
-         help=("shorten all urls through blink.to. "
-            "The existence of BLINKTMP33 environment var also sets this.") )
-    parser.add_option("-p", "--password", dest="password",default=False,
+    parser.add_option("-r", "--random", dest="randomized", default=False,
+         action="store_true",  help="randomize the destination filename.")
+    parser.add_option("-p", "--password", dest="password", default=False,
          help="tmp33 password. The TMP33 environment var will be checked if this isn't set.")
 
     (options, args) = parser.parse_args()
@@ -42,11 +40,8 @@ def main():
         print >>stderr, "Password required. See --help"
         exit()
 
-    blinktmp33 = options.blinkto or 'BLINKTMP33' in environ
-
     for f in args:
-        uri = upload_file(f, passwd)
-        print blinkto(uri) if blinktmp33 else uri
+        print upload_file(f, passwd, options.randomized)
 
 
 if __name__ == '__main__':
