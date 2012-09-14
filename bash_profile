@@ -24,8 +24,15 @@ export PYTHONSTARTUP=$HOME/.pythonrc.py
 export GIT_PS1_SHOWDIRTYSTATE=1
 source ~/.scriptdir/git-completion.bash
 
-# this shows a colorized git repo dirty state
-export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(__git_ps1 "(%s)")\[\033[00m\]\$ '
+# set up the prompt for the right context
+if (( $UID == 0)); then # i'm root, yo
+	RED="\[\033[0;31m\]"
+	DEFAULT="\[\033[0m\]"
+	export PS1=$RED'\u@\h:\w\$'$DEFAULT' '
+else
+	export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(__git_ps1 "(%s)")\[\033[00m\]\$ '
+fi
+alias sr="sudo bash -l"
 
 # Setup some colors to use later in interactive shell or scripts
 export COLOR_NONE='\e[0m' # No Color
@@ -125,16 +132,13 @@ complete -o default -F _pip_completion pip
 
 
 # virtualenv
-
 vw=`which virtualenvwrapper.sh 2>/dev/null`
 if [[ -n "$vw" ]] ; then
-	export PIP_RESPECT_VIRTUALENV=true
 	export WORKON_HOME=$HOME/Work/virtualenv
-	source "$vw"
+	export PIP_RESPECT_VIRTUALENV=true
 	export PIP_VIRTUALENV_BASE=$WORKON_HOME
+ 	source "$vw"
 fi
-
-alias mve="mkvirtualenv --no-site-packages"
 
 # helpers from troy on working with github pull reqs
 
