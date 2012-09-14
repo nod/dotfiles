@@ -1,10 +1,11 @@
 # shameless port of https://github.com/aniero/dotfiles/blob/master/install.rb
 
 from glob import glob
-from os import environ, getcwd, symlink
+from os import environ, getcwd, symlink, makedirs
 from os.path import exists, expanduser, join, normpath
 from platform import system
 from sys import stderr
+
 
 home = expanduser(environ['HOME'])
 
@@ -27,6 +28,14 @@ if 'Darwin' == system():
     target = normpath(join(home, '.bin/tig'))
     src = normpath(join(getcwd(), 'bin/tig-osx'))
     install_sym(src, target)
+
+for d in ('~/tmp', ):
+    d_ = expanduser(d)
+    if not exists(d_):
+        print "making directory:", d_
+        makedirs(d_)
+    else:
+        print "skipping", d_, "already exists."
 
 # we need a symlink for our ssh stuff.
 # for now, just hardcode it to ~/.secrets/ssh
