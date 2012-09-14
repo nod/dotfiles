@@ -21,7 +21,7 @@ set sw=4 sts=4 ts=4
 if has("gui_running")
 
 " ----------------  GUI ------------------------
-set background=dark
+set background=light
 set guioptions=egmrt
 :color solarized
 
