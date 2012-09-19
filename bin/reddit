@@ -39,7 +39,7 @@ def go(subreddit, limit, new):
             f.close()
             f = open(fpath, 'a')
             print >>f, csum
-            cmd = 'open {}'.format(url)
+            cmd = 'open -g {}'.format(url)
             p = Popen((cmd.split()))
             p.wait()
             new_count += 1
