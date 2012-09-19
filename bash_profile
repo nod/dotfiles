@@ -7,8 +7,9 @@ fi
 
 # get our personal helpers
 
-MDBPATH="~/Work/mongodb-osx-x86_64-2.0.3/bin"
-export PATH=$MDBPATH:$PATH:$HOME/.bin
+LOCALBIN="~/.localbin"
+MDBPATH="~/Work/mongodb-osx-x86_64-2.2.0/bin"
+export PATH=$LOCALBIN:$MDBPATH:$PATH:$HOME/.bin
 
 # get me some vim cmd line luvin
 set -o vi
