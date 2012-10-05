@@ -20,6 +20,10 @@
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     ls = ls-files
+    hp = "!source ~/.githelpers && show_git_head"
+    r = !git l -30
+    ra = !git r --all
+    l = "!source ~/.githelpers && pretty_git_log"
 
 [github]
 	user = nod
