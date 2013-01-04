@@ -45,7 +45,12 @@ def go(subreddit, limit, new):
             new_count += 1
         f.close()
     if new_count:
-        print "opened {} new links".format(new_count)
+        print "opened {} new link{}".format(
+            new_count,
+            's' if new_count > 1 else ''
+            )
+    else:
+        print "no new links"
 
 
 def usage():

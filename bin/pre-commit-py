@@ -14,8 +14,6 @@ result=$(mktemp -t precom)
 changed_py=$(git diff --name-only --diff-filter=AM --staged | grep '.py$')
 changed_js=$(git diff --name-only --diff-filter=AM --staged | grep -E '(.js|.html)$')
 
-status=0
-
 function show_err() {
   result_file=$1
   echo -e ${FAIL} FAILED
@@ -24,13 +22,16 @@ function show_err() {
   echo ---------------
 }
 
+function show_ok() {
+	echo -e $OKBLUE good $ENDC
+}
 
 echo -en ${HEADER}checking trailing whitespace ...
 if grep -HEn ' +$' $changed_py > $result
 then
   show_err $result
 else
-  echo -e $OKBLUE good $ENDC
+  show_ok
 fi
 
 echo -en ${HEADER}checking for print statements ...
@@ -38,7 +39,7 @@ if grep -HEn '^ *print' $changed_py > $result
 then
   show_err $result
 else
-  echo -e $OKBLUE good $ENDC
+  show_ok
 fi
 
 echo -en ${HEADER}checking files with pyflakes ...
@@ -46,15 +47,15 @@ if ! pyflakes $changed_py > $result
 then
   show_err $result
 else
-    echo -e $OKBLUE good $ENDC
+  show_ok
 fi
 
 echo -en ${HEADER}checking for painfully long lines ...
-if grep -HEn '^.{160}' $changed_py $changed_js > $result
+if grep -HEn '^.{120}' $changed_py $changed_js > $result
 then
   show_err $result
 else
-    echo -e $OKBLUE good $ENDC
+  show_ok
 fi
 
 for t in 'console.log' 'alert' 'debugger'; do
@@ -63,8 +64,10 @@ for t in 'console.log' 'alert' 'debugger'; do
   then
     show_err $result
   else
-      echo -e $OKBLUE good $ENDC
+    show_ok
   fi
 done
 
+# clean up temporary file
 rm -f $result
+

@@ -34,6 +34,10 @@ else
 	export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(__git_ps1 "(%s)")\[\033[00m\]\$ '
 fi
 alias sr="sudo bash -l"
+alias hilite='egrep -e"" --color=auto -e'
+alias up='rsync -a --progress --partial'
+
+
 
 # Setup some colors to use later in interactive shell or scripts
 export COLOR_NONE='\e[0m' # No Color
@@ -54,6 +58,8 @@ export COLOR_YELLOW='\e[1;33m'
 export COLOR_GRAY='\e[1;30m'
 export COLOR_LIGHT_GRAY='\e[0;37m'
 export CLICOLOR=1
+
+export GREP_COLOR=$COLOR_RED
 
 alias colorslist="set | egrep 'COLOR_\w*'" # Lists all colors
 alias l="ls -lrtF"

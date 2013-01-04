@@ -10,7 +10,7 @@ set sw=4 sts=4 ts=4
 :au BufEnter *.yml set sw=2 ts=2 et ai
 :au BufEnter *.haml set sw=2 ts=2 et ai
 :au BufEnter *.html   set sw=2 sts=2 ts=2 et noai
-:au BufEnter *.java set sw=4 sts=4 et ai
+:au BufEnter *.java set sw=2 sts=2 et ai
 :au BufEnter *.py set sw=4 sts=4 et ai
 :au BufEnter *.js set sw=2 sts=2 et ai
 
