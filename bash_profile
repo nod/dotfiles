@@ -26,14 +26,13 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 source ~/.scriptdir/git-completion.bash
 
 # set up the prompt for the right context
-if (( $UID == 0)); then # i'm root, yo
-	RED="\[\033[0;31m\]"
-	DEFAULT="\[\033[0m\]"
-	export PS1=$RED'\u@\h:\w\$'$DEFAULT' '
-else
-	export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(__git_ps1 "(%s)")\[\033[00m\]\$ '
-fi
-alias sr="sudo bash -l"
+RED="\[\033[0;31m\]"
+DEFAULT="\[\033[0m\]"
+export PS1_ROOt=$RED'\u@\h:\w\$'$DEFAULT' ' # root
+export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(typeset -f __git_ps1>/dev/null && __git_ps1 "(%s)")\[\033[00m\]\$ ' # user
+
+
+alias sr="sudo bash --login "
 alias hilite='egrep -e"" --color=auto -e'
 alias up='rsync -a --progress --partial'
 
