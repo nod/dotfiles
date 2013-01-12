@@ -1,0 +1,9 @@
+#!/bin/bash
+# This hook is run after every virtualenv is activated.
+
+proj=$(basename $VIRTUAL_ENV)
+if [[ -d $VIRTUAL_ENV/$proj ]] ; then
+    cd $VIRTUAL_ENV/$proj
+else
+    cd $VIRTUAL_ENV
+fi
