@@ -26,10 +26,8 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 source ~/.scriptdir/git-completion.bash
 
 # set up the prompt for the right context
-RED="\[\033[0;31m\]"
-DEFAULT="\[\033[0m\]"
-export PS1_ROOt=$RED'\u@\h:\w\$'$DEFAULT' ' # root
-export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(typeset -f __git_ps1>/dev/null && __git_ps1 "(%s)")\[\033[00m\]\$ ' # user
+# changes hostname to red if root
+export PS1='$( if [ $UID != 0 ]; then echo -n "\[\033[01;32m\]" ; else echo -n "\[\033[0;31m\]"; fi )\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(typeset -f __git_ps1>/dev/null && __git_ps1 "(%s)")\[\033[00m\]\$ ' # user
 
 
 alias sr="sudo bash --login "
