@@ -1,0 +1,11 @@
+tell application "Hermes"
+  if get playback state is playing then
+	set output to "bleh"
+    -- get track, artist and album
+    set currtitle to the current song's title
+    set currartist to the current song's artist
+    -- show track, artist
+    set songinfo to ("/me is listening to " & currtitle & " by " & currartist )
+    set output to songinfo
+  end if
+end tell
