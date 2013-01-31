@@ -1,0 +1,16 @@
+on ApplicationIsRunning(appName)
+	tell application "System Events" to set appNameIsRunning to exists (processes where name is appName)
+	return appNameIsRunning
+end ApplicationIsRunning
+
+if ApplicationIsRunning("Hermes") then
+	tell application "Hermes"
+		pause
+	end tell
+end if
+
+if ApplicationIsRunning("iTunes") then
+	tell application "iTunes"
+		pause
+	end tell
+end if

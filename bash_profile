@@ -143,6 +143,7 @@ alias gitx="open -a GitX"
 # itunes related aliases
 alias np="osascript ${APPLESCRIPT_DIR}/nowplaying.osa"
 alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy && pbpaste"
+alias nph="osascript ${APPLESCRIPT_DIR}/nphermes.osa|pbcopy && pbpaste"
 
 function sotd() {
 	songpath=`osascript ${APPLESCRIPT_DIR}/sotd.osa`
