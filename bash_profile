@@ -25,6 +25,42 @@ export PYTHONSTARTUP=$HOME/.pythonrc.py
 export GIT_PS1_SHOWDIRTYSTATE=1
 source ~/.scriptdir/git-completion.bash
 
+prompt_command() {
+    local BLACK="\[\033[0;30m\]"
+    local RED="\[\033[0;31m\]"
+    local GREEN="\[\033[0;32m\]"
+    local YELLOW="\[\033[0;33m\]"
+    local BLUE="\[\033[0;34m\]"
+    local MAGENTA="\[\033[0;35m\]"
+    local CYAN="\[\033[0;36m\]"
+    local WHITE="\[\033[0;37m\]"
+    local BBLACK="\[\033[1;30m\]"
+    local BGREEN="\[\033[1;32m\]"
+    local BMAGENTA="\[\033[1;35m\]"
+    local BCYAN="\[\033[1;36m\]"
+    local BWHITE="\[\033[1;37m\]"
+	local DARKGRAY="\[\033[01;34m\]"
+	local BOLDGRAY="\[\033[01;31m\]"
+    local DEFAULT="\[\033[0;39m\]"
+
+	if [ $(type -t __git_ps1) ]; then
+		local BRANCH="$( __git_ps1 "(%s)" )"
+	fi
+
+	if [ $UID == 0 ];then
+		local PROMPT_ROOT="${RED}\h${DEFAULT}"
+		local PROMPT_C="#"
+	else
+		local PROMPT_ROOT="\h"
+		local PROMPT_C="\$" # but shouldn't this replace if root? yes.. sigh.
+		# but there were certain instances where this character wasn't getting
+		# replaced properly
+	fi
+
+	export PS1='${PROMPT_ROOT}:${DARKGRAY}\W${BOLDGRAY}$(type -t __git_ps1>/dev/null && __git_ps1 "(%s)")${DEFAULT}\$ ' # user
+}
+# PROMPT_COMMAND=prompt_command
+
 # set up the prompt for the right context
 # changes hostname to red if root
 export PS1='$( if [ $UID != 0 ]; then echo -n "\[\033[01;32m\]" ; else echo -n "\[\033[0;31m\]"; fi )\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(typeset -f __git_ps1>/dev/null && __git_ps1 "(%s)")\[\033[00m\]\$ ' # user
