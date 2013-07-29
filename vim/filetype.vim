@@ -12,3 +12,6 @@ augroup markdown
  au! BufRead,BufNewFile *.mkd   setfiletype mkd
 augroup END
 
+augroup json
+ au! BufRead,BufNewFile *.json   setfiletype json
+augroup END

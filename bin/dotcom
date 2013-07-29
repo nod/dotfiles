@@ -1,0 +1,12 @@
+#!/bin/bash
+
+search_for=$*
+
+nomatch="No match for"
+
+for x in $search_for ; do
+	zz=`whois $x | grep --silent "${nomatch}" && echo NOT FOUND`
+	if [ "$zz" == "NOT FOUND" ]; then
+		echo $x
+	fi
+done
