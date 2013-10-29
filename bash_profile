@@ -68,7 +68,7 @@ export PS1='$( if [ $UID != 0 ]; then echo -n "\[\033[01;32m\]" ; else echo -n "
 
 alias sr="sudo bash --login "
 alias hilite='egrep -e"" --color=auto -e'
-alias up='rsync -a --progress --partial'
+alias r='rsync -a --progress --partial'
 
 
 
@@ -230,3 +230,5 @@ function pullr {
 }
 
 
+
+[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM

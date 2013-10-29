@@ -17,13 +17,14 @@
     co = checkout
     df = diff
     lg = log --oneline
-    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lol = log --color --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     ls = ls-files
     hp = "!source ~/.githelpers && show_git_head"
     r = !git l -30
     ra = !git r --all
     l = "!source ~/.githelpers && pretty_git_log"
+		lg = log --color --graph --date=iso --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(blue)<%an>%Creset%n%+b' --stat
 
 [github]
 	user = nod
