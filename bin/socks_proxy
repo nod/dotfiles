@@ -1,0 +1,17 @@
+#!/bin/sh
+
+state=$1
+
+valid_states="on off"
+
+if ! [[ $valid_states =~ $state ]]
+then
+	echo "usage: $0 on|off"
+	exit
+fi
+
+INTERFACE="Wi-Fi"
+
+sudo networksetup -setsocksfirewallproxy $INTERFACE localhost 6480
+sudo networksetup -setsocksfirewallproxystate $INTERFACE $state
+

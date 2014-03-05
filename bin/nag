@@ -1,0 +1,9 @@
+#!/bin/bash
+
+mins=$1
+shift 1
+text="$@"
+
+sleep $((mins * 60))
+say "${text}"
+

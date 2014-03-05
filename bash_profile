@@ -1,6 +1,6 @@
 # my custom bash goodness
 
-# anything local?
+# anything rc?
 if [ -e $HOME/.bashrc ]; then
 	source $HOME/.bashrc
 fi
@@ -8,7 +8,7 @@ fi
 # get our personal helpers
 
 LOCALBIN="~/.localbin"
-MDBPATH="~/Work/mongodb-osx-x86_64-2.2.0/bin"
+MDBPATH="~/Work/mongodb/bin"
 export PATH=$LOCALBIN:$MDBPATH:$PATH:$HOME/.bin
 
 # get me some vim cmd line luvin
@@ -229,6 +229,21 @@ function pullr {
     return $rc
 }
 
+function hx() {
+	hexdump -C $1 | less
+}
+
 
 
 [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM
+
+# anything local only?
+if [ -e $HOME/.bash_local ]; then
+	source $HOME/.bash_local
+fi
+
+
+
+
+
+
