@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# enable or disable a localhost socks proxy via cmdline
+# this expects a proxy to be running on localhost:port
+# usually setup via   ssh -Dport some.host
+
 state=$1
 
 valid_states="on off"
