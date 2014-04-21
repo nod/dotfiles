@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# enable or disable a localhost socks proxy via cmdline
+# this expects a proxy to be running on localhost:port
+# usually setup via   ssh -Dport some.host
+
+#state=$1
+
+# valid_states="on off"
+
+#if ! [[ $valid_states =~ $state ]]
+#then
+	#echo "usage: $0 on|off"
+	#exit
+#fi
+
+SERVER=senor
+SERVER=gsoc
+INTERFACE="Wi-Fi"
+state="on"
+
+sudo networksetup -setsocksfirewallproxy $INTERFACE localhost 6480
+sudo networksetup -setsocksfirewallproxystate $INTERFACE $state
+echo socks proxy set to $state
+
+ssh -D 6480 $SERVER
+
+
+state="off"
+sudo networksetup -setsocksfirewallproxy $INTERFACE localhost 6480
+sudo networksetup -setsocksfirewallproxystate $INTERFACE $state
+
+
