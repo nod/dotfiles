@@ -70,8 +70,6 @@ alias sr="sudo bash --login "
 alias hilite='egrep -e"" --color=auto -e'
 alias r='rsync -a --progress --partial'
 
-
-
 # Setup some colors to use later in interactive shell or scripts
 export COLOR_NONE='\e[0m' # No Color
 export COLOR_WHITE='\e[1;37m'
@@ -144,6 +142,53 @@ alias gitx="open -a GitX"
 alias np="osascript ${APPLESCRIPT_DIR}/nowplaying.osa"
 alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy && pbpaste"
 alias nph="osascript ${APPLESCRIPT_DIR}/nphermes.osa|pbcopy && pbpaste"
+
+function human() {
+	val=$1
+	thousand=1000
+	million=1000000
+	billion=1000000000
+	trillion=1000000000000
+
+ # add commas to numeric strings, changing "1234567" to "1,234,567"
+	commaized=`echo $val | sed -e :a -e 's/\(.*[0-9]\)\([0-9]\{3\}\)/\1,\2/;ta'`
+
+	scale=$trillion
+	name_scale="trillion"
+	shorter=`bc <<< "scale=2; $val / $scale"`
+	if [[ ( $shorter > 0 ) ]] ; then
+		echo $shorter $name_scale or $commaized
+		return
+	fi
+
+	scale=$billion
+	name_scale="billion"
+	shorter=`bc <<< "scale=2; $val / $scale"`
+	if [[ ( $shorter > 0 ) ]] ; then
+		echo $shorter $name_scale or $commaized
+		return
+	fi
+
+	scale=$million
+	name_scale="million"
+	shorter=`bc <<< "scale=2; $val / $scale"`
+	if [[ ( $shorter > 0 ) ]] ; then
+		echo $shorter $name_scale or $commaized
+		return
+	fi
+
+	scale=$thousand
+	name_scale="thousand"
+	shorter=`bc <<< "scale=2; $val / $scale"`
+	if [[ ( $shorter > 0 ) ]] ; then
+		echo $shorter $name_scale or $commaized
+		return
+	fi
+
+
+	echo failed probably...  $commaized
+}
+
 
 function sotd() {
 	songpath=`osascript ${APPLESCRIPT_DIR}/sotd.osa`
