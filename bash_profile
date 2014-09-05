@@ -147,7 +147,7 @@ alias nph="osascript ${APPLESCRIPT_DIR}/nphermes.osa|pbcopy && pbpaste"
 function tardt() {
 	d=`basename $1`
 	dt=`date +%y%m%d`
-	outname="${d}_${dt}.tgz"
+	outname="${d}.${dt}.tgz"
 	tar czf $outname $d
 	[ -e $outname ] && echo $outname
 }
