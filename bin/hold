@@ -1,0 +1,8 @@
+#!/bin/sh
+
+f=$1
+d="b${RANDOM}"
+ssh bot@hold.lvlr.io "mkdir /sites/hold/htdocs/${d}"
+scp $f bot@hold.lvlr.io:"/sites/hold/htdocs/${d}/${f}"
+
+echo http://hold.lvlr.io/${d}/${f}

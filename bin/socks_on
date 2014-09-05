@@ -15,7 +15,7 @@
 #fi
 
 SERVER=senor
-SERVER=gsoc
+
 INTERFACE="Wi-Fi"
 state="on"
 

@@ -29,3 +29,6 @@
 [github]
 	user = nod
 	token = nope
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
