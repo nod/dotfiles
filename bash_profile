@@ -143,6 +143,15 @@ alias np="osascript ${APPLESCRIPT_DIR}/nowplaying.osa"
 alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy && pbpaste"
 alias nph="osascript ${APPLESCRIPT_DIR}/nphermes.osa|pbcopy && pbpaste"
 
+
+function tardt() {
+	d=`basename $1`
+	dt=`date +%y%m%d`
+	outname="${d}_${dt}.tgz"
+	tar czf $outname $d
+	[ -e $outname ] && echo $outname
+}
+
 function human() {
 	val=$1
 	thousand=1000
