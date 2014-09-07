@@ -1,0 +1,19 @@
+
+-- maximize current term window vertically only
+-- http://hints.macworld.com/article.php?story=20050428173653581
+
+tell application "Finder"
+	set _b to bounds of window of desktop
+end tell
+
+tell application "Terminal"
+	tell front window
+		-- get curr size
+		set {_x, _y, _w, _h} to (get bounds)
+		-- set desired height to desktop height
+		set _vz to item 4 of _b
+		-- now tell term to change window dimensions
+		set bounds to {_x, 0, _w, _vz}
+	end tell
+end tell
+
