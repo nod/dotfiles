@@ -142,6 +142,7 @@ alias gitx="open -a GitX"
 alias np="osascript ${APPLESCRIPT_DIR}/nowplaying.osa"
 alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy && pbpaste"
 alias nph="osascript ${APPLESCRIPT_DIR}/nphermes.osa|pbcopy && pbpaste"
+alias vmax="osascript ${APPLESCRIPT_DIR}/term_max_height.osa"
 
 
 function tardt() {
@@ -214,6 +215,7 @@ alias crypt_on="hdid -readonly ${dmg_loc} && cd /Volumes/Crypt"
 alias crypt_edit="hdid -readwrite ${dmg_loc} && cd /Volumes/Crypt"
 alias crypt_off="cd && hdiutil detach /Volumes/Crypt"
 
+alias irc="ssh -t ${IRCHOST} screen -rd irc"
 
 # pip bash completion start
 _pip_completion()
@@ -301,3 +303,5 @@ fi
 
 
 
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
