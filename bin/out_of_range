@@ -1,0 +1,6 @@
+#!/bin/sh
+
+d=$(date)
+echo "out_of_range run at ${d}" >> /tmp/out_of_range
+
+osascript ~/.applescripts/out_of_range.osa

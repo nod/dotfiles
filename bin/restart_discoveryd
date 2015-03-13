@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo stopping discoveryd
+sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist
+
+echo restarting discoveryd
+sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist
+

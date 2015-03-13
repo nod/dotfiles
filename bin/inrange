@@ -1,0 +1,5 @@
+#!/bin/sh
+
+killall ScreenSaverEngine
+
+echo `date` in range >> /tmp/out_of_range

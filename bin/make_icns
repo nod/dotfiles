@@ -1,0 +1,22 @@
+#!/bin/bash
+
+INPUTFILE=$1
+
+: ${INPUTFILE:?"need to pass in path to 1024x1024 png"}
+
+TMPDIR=`mktemp -d /tmp/mkicns.XXX`
+mkdir ${TMPDIR}/i.iconset
+
+sips -z 16 16     $INPUTFILE --out $TMPDIR/i.iconset/icon_16x16.png
+sips -z 32 32     $INPUTFILE --out $TMPDIR/i.iconset/icon_16x16@2x.png
+sips -z 32 32     $INPUTFILE --out $TMPDIR/i.iconset/icon_32x32.png
+sips -z 64 64     $INPUTFILE --out $TMPDIR/i.iconset/icon_32x32@2x.png
+sips -z 128 128   $INPUTFILE --out $TMPDIR/i.iconset/icon_128x128.png
+sips -z 256 256   $INPUTFILE --out $TMPDIR/i.iconset/icon_128x128@2x.png
+sips -z 256 256   $INPUTFILE --out $TMPDIR/i.iconset/icon_256x256.png
+sips -z 512 512   $INPUTFILE --out $TMPDIR/i.iconset/icon_256x256@2x.png
+sips -z 512 512   $INPUTFILE --out $TMPDIR/i.iconset/icon_512x512.png
+cp $INPUTFILE $TMPDIR/i.iconset/icon_512x512@2x.png
+iconutil -c icns $TMPDIR/i.iconset --output ${INPUTFILE}.icns
+rm -R $TMPDIR/i.iconset
+

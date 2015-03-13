@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# usage: ios_icons some_file.png
+# output: creates images in needed sizes for iOS icon files
+#         ex: some_file_SIZE.png
+
+inf=$1
+
+filename=$(basename "$inf")
+ext="${filename##*.}"
+fname="${filename%.*}"
+echo "creating ${fname}_SIZE.{$ext}"
+
+for i in 29 58 40 80 76 152  ; do
+  sips -Z $i --out "${fname}_${i}.${ext}"  $inf
+done
+

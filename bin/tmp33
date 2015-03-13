@@ -42,6 +42,7 @@ def upload_file(fpath, passwd, randomized=False):
     c.close()
 
     ret = json_loads(out.getvalue())
+    print "type:", type(ret), "RET:", ret
     return ret.get('uri')
 
 
