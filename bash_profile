@@ -5,6 +5,8 @@ if [ -e $HOME/.bashrc ]; then
 	source $HOME/.bashrc
 fi
 
+export LVLRBASE=$HOME/Work/lvlr
+
 # get our personal helpers
 
 LOCALBIN="~/.localbin"
@@ -15,8 +17,8 @@ export PATH=$LOCALBIN:$MDBPATH:$PATH:$HOME/.bin
 set -o vi
 
 # api keys, etc
-if [ -e ~/.secrets/secrets ]; then
-	source ~/.secrets/secrets
+if [ -e $HOME/.secrets/secrets ]; then
+	source $HOME/.secrets/secrets
 fi
 
 export PYTHONSTARTUP=$HOME/.pythonrc.py
@@ -211,7 +213,7 @@ function sotd() {
 alias i="osascript ${APPLESCRIPT_DIR}/info.osa > /dev/null 2>&1"
 
 # mount disk image
-alias crypt_on="hdid -readonly ${dmg_loc} && cd /Volumes/Crypt"
+alias crypt_on="hdid -readonly ${dmg_loc} && cd /Volumes/Crypt/accounts"
 alias crypt_edit="hdid -readwrite ${dmg_loc} && cd /Volumes/Crypt"
 alias crypt_off="cd && hdiutil detach /Volumes/Crypt"
 

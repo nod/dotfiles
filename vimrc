@@ -60,11 +60,12 @@ endif
 
 if has("gui_running")
 
+let macvim_skip_colorscheme = 1
+
 " ----------------  GUI ------------------------
-set background=dark
+" set background=dark
 set guioptions=egmrt
-:color nodmanian_blood
-" :color solarized
+	:color nodmanian_blood
 set colorcolumn=81
 set showcmd
 set guifont=Source\ Code\ Pro:h12
@@ -74,7 +75,8 @@ set guifont=Source\ Code\ Pro:h12
 else
 
 "---- cli ---
-	:color zellner
+	:color zenburn
+	":color zellner
 "---- /cli ---
 
 endif
