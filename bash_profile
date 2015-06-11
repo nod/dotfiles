@@ -20,6 +20,9 @@ set -o vi
 if [ -e $HOME/.secrets/secrets ]; then
 	source $HOME/.secrets/secrets
 fi
+if [ -e $HOME/.bash_local ]; then
+	source $HOME/.bash_local
+fi
 
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 
@@ -97,6 +100,8 @@ export GREP_COLOR=$COLOR_RED
 alias colorslist="set | egrep 'COLOR_\w*'" # Lists all colors
 alias l="ls -lrtF"
 alias ll="ls -lF"
+
+alias scratch="source ~/.venv/bin/activate"
 
 # pip command line completion is nice too
 # which pip >/dev/null 2>&1 && eval "`pip completion --bash`"

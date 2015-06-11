@@ -15,3 +15,8 @@ augroup END
 augroup json
  au! BufRead,BufNewFile *.json   setfiletype json
 augroup END
+
+augroup coffee
+ au! BufRead,BufNewFile *.coffee   setfiletype coffee
+augroup END
+

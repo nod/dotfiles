@@ -1,0 +1,176 @@
+#!/Users/jeremy/.venv/bin/python
+
+# INSTALLATION
+# - `virtualenv ~/.venv`
+# - `source ~/.venv/bin/activate`
+# - `pip install click`
+# - `pip install roku`
+# - edit the top line of this script to match the path to your virtualenv python
+#   interp or change it to `/usr/bin/env python` and always run this in that
+#   virtualenv with the dependencies installed
+#
+# USAGE
+# - `roku --help`
+#
+# LICENSE
+# Whatever.
+#
+# AUTHOR
+# jeremy kelley <jeremy@33ad.org>
+#
+
+from os import environ
+
+try:
+    import click
+    from roku import Roku
+except ImportError:
+    print "ERR: click or roku missing - virtualenv and pip are your friends"
+import time
+
+DEFAULT_IP = environ.get('ROKUHOST')
+
+
+# globals are fun mmkay
+roku_master = None
+
+
+@click.group()
+@click.option('--ip', default=DEFAULT_IP)
+def roku(ip):
+    global roku_master
+    roku_master = Roku(DEFAULT_IP)
+
+
+@roku.command()
+@click.option('--faster', '-f', is_flag=True, default=False)
+@click.option('--fastest', '-F', is_flag=True, default=False)
+def forward(faster, fastest):
+    """ fast forward the video """
+    roku_master.forward()
+    if fastest:
+        roku_master.forward()
+        roku_master.forward()
+    elif faster:
+        roku_master.forward()
+
+
+@roku.command()
+@click.option('--faster', '-f', is_flag=True, default=False)
+@click.option('--fastest', '-F', is_flag=True, default=False)
+def rewind(faster, fastest):
+    """ rewind the video """
+    roku_master.reverse()
+    if fastest:
+        roku_master.reverse()
+        roku_master.reverse()
+    elif faster:
+        roku_master.reverse()
+
+
+@roku.command()
+def replay():
+    """ replay the last few seconds of video """
+    roku_master.replay()
+
+
+@roku.command()
+def play():
+    """ play/pause the video """
+    roku_master.play()
+
+
+@roku.command()
+def home():
+    """ roku home screen """
+    roku_master.home()
+
+
+@roku.command()
+def discover():
+    for r in Roku.discover():
+        print r.host
+
+
+@roku.command()
+def cine():
+    """ start cinemac """
+    apps = roku_master.apps
+    appname = 'Rokumac'
+    for a in apps:
+        if appname == a.name:
+            a.launch()
+            break
+    print "OOPS NOT FOUND"
+
+
+@roku.command()
+def netflix():
+    """ start netflix """
+    netflix_id = 12  # global?
+    roku_master[netflix_id].launch()
+
+
+def do_x(cmd, num=1):
+    if num == 0: num = 1
+    f = getattr(roku_master, cmd)
+    while num > 0:
+        f()
+        click.echo(cmd)
+        num -= 1
+        # anti flood
+        if num: time.sleep(0.2)
+    return 0
+
+
+@roku.command()
+def vim():
+    """ it's like vim, for roku movement """
+    keepgoing = True
+    textmode = False
+    tmpstr = ''
+    mm = 0
+    while keepgoing:
+        input = click.termui.getchar()
+        if textmode:
+            if 13 == ord(input):
+                # hit enter. send it then reset us
+                roku_master.literal(tmpstr)
+                tmpstr = ''
+                textmode = False
+                click.echo('')
+            else:
+                click.echo(input, nl=False)
+                tmpstr += input
+        elif 'q' == input:
+            keepgoing = False
+        elif 'b' == input:
+            mm = do_x('back')
+        elif 'j' == input:
+            mm = do_x('down', mm)
+        elif 'k' == input:
+            mm = do_x('up', mm)
+        elif 'h' == input:
+            mm = do_x('left', mm)
+        elif 'l' == input:
+            mm = do_x('right', mm)
+        elif 'f' == input:
+            mm = do_x('forward', mm)
+        elif 'r' == input:
+            mm = do_x('reverse', mm)
+        elif 'p' == input:
+            mm = do_x('play', 1)
+        elif 13 == ord(input): # enter
+            mm = do_x('select')
+        elif input in '123456789':
+            mm = int(input)
+        elif '*' == input:
+            mm = do_x('info', 1)
+        elif 'i' == input:
+            textmode = True
+
+
+if __name__ == '__main__':
+    roku()
+
+

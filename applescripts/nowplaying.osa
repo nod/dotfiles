@@ -4,7 +4,9 @@ tell application "iTunes"
     set currtrack to the name of current track
     set currartist to the artist of current track
     -- show track, artist
-    set songinfo to ("/me is listening to " & currtrack & " by " & currartist )
+    -- set songinfo to ("/me is listening to " & currtrack & " by " & currartist )
+    set songinfo to (":musical_note: listening to *" & currtrack & "* by *" & currartist & "*" )
+
     set output to songinfo
   end if
 end tell
