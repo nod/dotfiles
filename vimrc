@@ -24,7 +24,9 @@ set undolevels=1000      " use many muchos levels of undo
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set visualbell           " don't beep
 set noerrorbells         " don't beep
-set colorcolumn=81 " highlight the edge of sanity
+" set colorcolumn=81 " highlight the edge of sanity
+set textwidth=80
+set colorcolumn=+1,120 " highlight the edge of sanity
 
 
 :let mapleader=","
@@ -84,6 +86,13 @@ map <C-K> <C-W>k<C-W>
 map <C-h> <C-W>h<C-W>
 map <C-l> <C-W>l<C-W>
 
+filetype plugin indent on
+syntax on
+
+" dont let color schemes override bg color of term
+hi Normal ctermbg=none
+highlight ColorColumn ctermbg=236
+
 " trailing whitespace kills puppies
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -92,8 +101,3 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-filetype plugin indent on
-syntax on
-
-" dont let color schemes override bg color of term
-hi Normal ctermbg=none
