@@ -1,0 +1,7 @@
+#!/bin/sh
+
+: ${CRYPTED_PASS:?"Need to set CRYPTED_PASS in your environment"}
+: ${1:?"usage: decr infile.aes outfile.unencrypted"}
+: ${2:?"usage: decr infile.aes outfile.unencrypted"}
+
+openssl aes-128-cbc -d -in $1 -out $2 -pass pass:$CRYPTED_PASS
