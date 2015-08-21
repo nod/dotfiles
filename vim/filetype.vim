@@ -16,6 +16,10 @@ augroup json
  au! BufRead,BufNewFile *.json   setfiletype json
 augroup END
 
+augroup jade
+ au! BufRead,BufNewFile *.jade   setfiletype jade
+augroup END
+
 augroup coffee
  au! BufRead,BufNewFile *.coffee   setfiletype coffee
 augroup END
