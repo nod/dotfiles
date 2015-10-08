@@ -1,0 +1,5 @@
+#!/bin/sh
+
+keyfile=$1
+
+ssh-keygen -f $keyfile -l

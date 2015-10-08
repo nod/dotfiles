@@ -11,7 +11,7 @@ ext="${filename##*.}"
 fname="${filename%.*}"
 echo "creating ${fname}_SIZE.{$ext}"
 
-for i in 16 29 32 58 40 64 80 76 128 152 256 512 1024  ; do
-  sips -Z $i --out "${fname}_${i}.${ext}"  $inf
+for i in 16 29 32 58 40 100 114 120 180 72 144 76 87 64 80 76 128 152 256 512 1024  ; do
+  sips -Z $i --out "${fname}-${i}.${ext}"  $inf
 done
 

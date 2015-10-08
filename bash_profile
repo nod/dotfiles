@@ -152,6 +152,12 @@ alias nph="osascript ${APPLESCRIPT_DIR}/nphermes.osa|pbcopy && pbpaste"
 alias vmax="osascript ${APPLESCRIPT_DIR}/term_max_height.osa"
 
 
+function mkdt() {
+	dt=`date +%y%m%d`
+	mkdir -p $dt
+	cd $dt
+}
+
 function tardt() {
 	d=`basename $1`
 	dt=`date +%y%m%d`

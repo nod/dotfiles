@@ -64,7 +64,7 @@ if has("gui_running")
 " ----------------  GUI ------------------------
 " set background=dark
 set guioptions=egmrt
-:color nodmanian_blood
+:color gotham
 set showcmd
 set guifont=Source\ Code\ Pro\ Light:h12
 highlight ColorColumn guibg=LightSteelBlue4

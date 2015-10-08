@@ -4,6 +4,11 @@
 # exclude patterns (uncomment them if you want to use them):
 # *.[oa]
 # *~
+#
+
+# something's parking gorp in .scriptdir now...
+scriptdir/*
+
 .DS_Store
 *.swp
 *~.nib
