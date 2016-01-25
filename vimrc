@@ -1,7 +1,7 @@
 set nocompatible " old vi is old.
 set nomodeline " do. not. want.
 set hidden "hide buffers, don't close them
-set cursorline   " show a line where the cursor is
+set nocursorline   " show a line where the cursor is
 set title " show filename in terminal title
 set tabstop=4     " a tab is four spaces by default
 set shiftwidth=4  " number of spaces to use for autoindenting
@@ -27,6 +27,8 @@ set noerrorbells         " don't beep
 " set colorcolumn=81 " highlight the edge of sanity
 set textwidth=80
 set colorcolumn=+1,120 " highlight the edge of sanity
+
+let g:netrw_list_hide= '.*\.swp$,.*\.pyc$'
 
 
 :let mapleader=","
@@ -63,7 +65,14 @@ endif
 if has("gui_running")
 " ----------------  GUI ------------------------
 " set background=dark
-set guioptions=egmrt
+"
+"
+"
+"
+
+
+" set guioptions=egmrt
+set guioptions=egm
 :color gotham
 set showcmd
 set guifont=Source\ Code\ Pro\ Light:h12
@@ -71,7 +80,8 @@ highlight ColorColumn guibg=LightSteelBlue4
 " --------------- end GUI -----------------
 else
 "---- cli ---
-:color jellybeans
+" :color jellybeans
+:color ub
 highlight ColorColumn ctermbg=236
 "---- /cli ---
 endif
