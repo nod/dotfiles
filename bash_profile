@@ -228,7 +228,7 @@ alias crypt_on="hdid -readonly ${dmg_loc} && cd /Volumes/Crypt/accounts"
 alias crypt_edit="hdid -readwrite ${dmg_loc} && cd /Volumes/Crypt"
 alias crypt_off="cd && hdiutil detach /Volumes/Crypt"
 
-alias irc="ssh -t ${IRCHOST} screen -rd irc"
+alias irc="ssh -t ${IRCHOST} screen -rd "
 
 # pip bash completion start
 _pip_completion()
