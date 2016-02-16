@@ -101,7 +101,7 @@ alias colorslist="set | egrep 'COLOR_\w*'" # Lists all colors
 alias l="ls -lrtF"
 alias ll="ls -lF"
 
-alias scratch="source ~/.venv/bin/activate"
+alias scratch="source ~/.venvs/scratch/bin/activate"
 
 # pip command line completion is nice too
 # which pip >/dev/null 2>&1 && eval "`pip completion --bash`"

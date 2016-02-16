@@ -23,13 +23,13 @@ for f in glob('*'):
     src = normpath(join(getcwd(), f))
     install_sym(src, target)
 
-# install a symlink to tig if we're on osx
 if 'Darwin' == system():
+    # install a symlink to tig since we're on osx
     target = normpath(join(home, '.bin/tig'))
     src = normpath(join(getcwd(), 'bin/tig-osx'))
     install_sym(src, target)
 
-for d in ('~/tmp', ):
+for d in ('~/tmp', '~/.venvs'):
     d_ = expanduser(d)
     if not exists(d_):
         print "making directory:", d_
