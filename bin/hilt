@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+
+import re
+
+COLOR_FMTS = [
+    u'\033[1;43m{}\033[1;m',  # bg brown
+    u'\033[1;46m{}\033[1;m',  # bg cyan
+    u'\033[1;45m{}\033[1;m',  # bg magenta
+    u'\033[1;47m{}\033[1;m',  # bg gray
+    u'\033[1;41m{}\033[1;m',  # bg red
+    u'\033[1;44m{}\033[1;m',  # bg blue
+    u'\033[1;42m{}\033[1;m',  # bg green
+    u'\033[1;48m{}\033[1;m',  # bg crimson
+    u'\033[1;31m{}\033[1;m',  # red
+    u'\033[1;32m{}\033[1;m',  # green
+    u'\033[1;33m{}\033[1;m',  # yellow
+    u'\033[1;34m{}\033[1;m',  # blue
+    u'\033[1;35m{}\033[1;m',  # magenta
+    u'\033[1;36m{}\033[1;m',  # cyan
+    u'\033[1;37m{}\033[1;m',  # white
+    u'\033[1;38m{}\033[1;m',  # crimson
+    u'\033[1;30m{}\033[1;m',  # gray
+    ]
+
+
+def _replace_color(match_obj):
+    matches = []
+    if match_obj.groups():
+        # we had regex match groups requested
+        for i,s in enumerate(match_obj.groups()):
+            midx = 1 + i # groups are 1 based
+            cfmt = COLOR_FMTS[i % len(COLOR_FMTS)]
+            matches.append(cfmt.format(s))
+        return ''.join(matches)
+    else:
+        # no groups, just a bare regex
+        return COLOR_FMTS[0].format(match_obj.group(0))
+
+
+def process_line(ln, ln_re):
+    return ln_re.sub(_replace_color, ln)
+
+epilog = r"""
+Regex groups will be different colors.
+ex: '\b(\w+?)(\d+)\b'
+    will highlight words ending in digits with 2 different colors
+"""
+
+if __name__ == '__main__':
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser(
+        description="Hilite lines based on regex.",
+        epilog=epilog )
+    parser.add_argument('regex', type=unicode)
+    args = parser.parse_args()
+
+    reg = re.compile(args.regex)
+
+    for ln in sys.stdin:
+        print(process_line(ln[:-1], reg))
