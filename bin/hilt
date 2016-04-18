@@ -80,11 +80,14 @@ if __name__ == '__main__':
         else:
             inf = open(args.file)
     else:
-        args.file = sys.stdin
+        inf = sys.stdin
 
-    for ln in sys.stdin:
+    while 1:
+        try:
+            ln = inf.readline()
+        except KeyboardInterrupt:
+            break
+        if not ln: break
         print(process_line(ln[:-1], reg))
-
-
 
 
