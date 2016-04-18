@@ -6,6 +6,8 @@ if [ -e $HOME/.bashrc ]; then
 fi
 
 export LVLRBASE=$HOME/Work/lvlr
+alias lvssh="cd $LVLRBASE/dev && vagrant ssh && cd -"
+
 
 # get our personal helpers
 
@@ -303,18 +305,12 @@ function hx() {
 }
 
 
-
-[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM
+function moff() {
+	open -a Markoff "$1"
+}
 
 # anything local only?
 if [ -e $HOME/.bash_local ]; then
 	source $HOME/.bash_local
 fi
 
-
-
-
-
-
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
