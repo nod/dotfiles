@@ -1,41 +1,33 @@
-#!/Users/jeremy/.venvs/scratch/bin/python
+#!/usr/bin/env python
 
 """
 Copies text to 33ad.org/pb via the command line or retrieves the raw text of a
-pastebin if given a hash.
+pastein if given a hash.
 
 USAGE
 =====
 
   create new pastebin
-    pb33 < file
-    pb33 file [ file ... ]
+    pb33.py < file
+    pb33.py file [ file ... ]
 
   retrieve existing pastebin contents
-    pb33 -g HASH
+    pb33.py -g HASH
 
 """
 
 
 import re
+import pycurl
 import StringIO
-
-try:
-    import requests
-    from BeautifulSoup import BeautifulSoup
-except ImportError:
-    raise SystemExit('requests and/or BeautifulSoup not found. Please install.')
-
-
-# insecure warnings on nested certificate chains are annoying
-# no, this isn't the best thing to do, but it works for now. -jk-
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+import urllib
 
 try:
     from magic import from_buffer as magic_from_buffer
 except ImportError:
     magic_from_buffer = lambda *a: ''
+
+from BeautifulSoup import BeautifulSoup
 
 usage = __doc__
 
@@ -48,11 +40,8 @@ def filetype_hilite(data):
                 re.MULTILINE)
         if pytraceback_re.search(data[:2048]):
             filetype = "pytb"
-    try:
-        res = requests.get('http://33ad.org/pb', verify=False)
-    except requests.InsecureRequestWarning:
-        pass
-    soup = BeautifulSoup(res.text)
+    html = urllib.urlopen('http://33ad.org/pb').read()
+    soup = BeautifulSoup(html)
     hilite_values = [ f['value'] for f in soup.findAll('option') if f['value'] ]
     for h in hilite_values:
         if h in filetype.split():
@@ -62,32 +51,35 @@ def filetype_hilite(data):
 
 
 def get(hash):
-    try:
-        u = requests.get('http://33ad.org/pb/{}?raw=1'.format(hash),
-                         verify=False)
-    except requests.InsecureRequestWarning:
-        pass
-    print u.text
+    u = urllib.urlopen('http://33ad.org/pb/{}?raw=1'.format(hash))
+    print u.read()
+
 
 
 def pb(data):
     hilite = filetype_hilite(data)
     out = StringIO.StringIO()
-    data = {
-        "submit": "pasteit",
-        "hilite": str(hilite),
-        "human2": "on",
-        "_paste": data,
-        }
-    try:
-        res = requests.post(
-            'https://33ad.org/pb',
-            verify=False, # ssl certificate chains are cray
-            data=data )
-    except e:
-        print e, type(e)
-        pass
-    return res.url
+    c = pycurl.Curl()
+    c.setopt(pycurl.WRITEFUNCTION, out.write)
+    #c.setopt(c.VERBOSE, True)
+    c.setopt(c.FOLLOWLOCATION, True)
+    c.setopt(c.POST, True)
+    c.setopt(c.URL, "http://33ad.org/pb")
+    c.setopt(c.HTTPPOST, [
+        ("submit", "pasteit"),
+        ("hilite", str(hilite)),
+        ("human2", "on"),
+        ("_paste", data),
+        ] )
+    c.perform()
+    c.close()
+
+    result = out.getvalue()
+    soup = BeautifulSoup(result)
+    pbloc = soup.find('span','pbloc')
+    if not pbloc:
+        raise Exception, "result=%s" % result
+    return re.sub(r'.*?\s+', r'', pbloc.string)
 
 
 def main():

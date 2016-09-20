@@ -230,7 +230,7 @@ alias crypt_on="hdid -readonly ${dmg_loc} && cd /Volumes/Crypt/accounts"
 alias crypt_edit="hdid -readwrite ${dmg_loc} && cd /Volumes/Crypt"
 alias crypt_off="cd && hdiutil detach /Volumes/Crypt"
 
-alias irc="ssh -t ${IRCHOST} screen -rd "
+alias irc="ssh -t ${IRCHOST} screen -rd irc"
 
 # pip bash completion start
 _pip_completion()
@@ -313,4 +313,14 @@ function moff() {
 if [ -e $HOME/.bash_local ]; then
 	source $HOME/.bash_local
 fi
+
+
+# wonk with jupyter in virtualenvs on osx
+function frameworkpython {
+    if [[ ! -z "$VIRTUAL_ENV" ]]; then
+        PYTHONHOME=$VIRTUAL_ENV /usr/bin/python "$@"
+    else
+        /usr/bin/python "$@"
+    fi
+}
 

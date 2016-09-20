@@ -1,7 +1,20 @@
-#!/usr/bin/env /Users/jeremy/.venv/bin/python
+#!/usr/bin/env /Users/jeremy/.venvs/scratch/bin/python
 
 import sys
 
 import markdown
 
-print markdown.markdown(sys.stdin.read())
+print """
+<head>
+<style type="text/css">
+body { font-family: helvetica, sans-serif; font-size: 16px; }
+</style>
+</head>
+<body>"""
+
+print markdown.markdown(sys.stdin.read(),
+                       extensions=['markdown.extensions.nl2br']
+                       )
+print """
+</body>
+"""
