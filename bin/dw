@@ -12,7 +12,7 @@ punc = punc.replace('"','')
 punc = punc.replace("'",'')
 
 def choose_words(howmany=None):
-    if not howmany: howmany = randint(3,6)
+    if not howmany: howmany = randint(3,4)
     assert isinstance(howmany, int)
     dwlist = [ x.split()[1] for x in open(dwfile).readlines()]
     return [choice(dwlist) for x in xrange(1,howmany)]
@@ -20,12 +20,12 @@ def choose_words(howmany=None):
 def genphrase():
     words = choose_words()
     # print ' '.join(words)
-    sep = '_-.~'
+    sep = '-'
     x = randint(0,len(words)-1)
-    words[x] = words[x].replace(choice(words[x]), choice(words)[0].upper())
-    anchor = choice('-_').join(words)
+    # words[x] = words[x].replace(choice(words[x]), choice(words)[0].upper())
+    anchor = choice('-').join(words)
     print (
-        anchor + choice(sep) + str(randint(200, 2000))
+        anchor + '.' + str(randint(44, 1500))
         )
 
 if __name__ == '__main__':
