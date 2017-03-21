@@ -5,6 +5,10 @@ if [ -e $HOME/.bashrc ]; then
 	source $HOME/.bashrc
 fi
 
+if [ -e $HOME/.env ]; then
+	source $HOME/.env
+fi
+
 export LVLRBASE=$HOME/Work/lvlr
 alias lvssh="cd $LVLRBASE/dev && vagrant ssh && cd -"
 
@@ -76,6 +80,7 @@ export PS1='$( if [ $UID != 0 ]; then echo -n "\[\033[01;32m\]" ; else echo -n "
 alias sr="sudo bash --login "
 alias hilite='egrep -e"" --color=auto -e'
 alias r='rsync -a --progress --partial'
+alias nth='open -a Terminal.app .'
 
 # Setup some colors to use later in interactive shell or scripts
 export COLOR_NONE='\e[0m' # No Color

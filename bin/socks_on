@@ -14,7 +14,7 @@
 	#exit
 #fi
 
-SERVER=senor
+SERVER=badger
 
 INTERFACE="Wi-Fi"
 state="on"

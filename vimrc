@@ -46,8 +46,9 @@ if has('autocmd') " newschool
 	autocmd filetype python set sw=4 sts=4 et ai
 	autocmd filetype jade set sw=2 sts=2 et ai
 	autocmd filetype coffee set sw=2 sts=2 et ai
+	autocmd filetype swift set sw=4 sts=4 et ai
 	autocmd filetype markdown set sw=2 sts=2 ts=2 et
-  autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
+	autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
 else " oldschool
 	:au BufEnter *.md set sw=2 sts=2 ts=2 et
 	:au BufEnter *.rb set sw=2 ts=2 et ai
