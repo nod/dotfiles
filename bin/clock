@@ -1,0 +1,3 @@
+#/bin/sh
+
+while date +"%H : %M : %S" | figlet ; do sleep 1 ; clear ; done 
