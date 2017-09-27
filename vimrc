@@ -53,6 +53,7 @@ else " oldschool
 	:au BufEnter *.md set sw=2 sts=2 ts=2 et
 	:au BufEnter *.rb set sw=2 ts=2 et ai
 	:au BufEnter *.yml set sw=2 ts=2 et ai
+	:au BufEnter *.scala set sw=2 ts=2 et ai
 	:au BufEnter *.html   set sw=2 sts=2 ts=2 et noai
 	:au BufEnter *.js set sw=2 sts=2 ts=2 et
 	:au BufEnter *.json set sw=2 sts=2 ts=2 et
