@@ -99,6 +99,8 @@ map <C-K> <C-W>k<C-W>
 map <C-h> <C-W>h<C-W>
 map <C-l> <C-W>l<C-W>
 
+nmap <C-j> :%!jq .<cr>
+
 filetype plugin indent on
 syntax on
 

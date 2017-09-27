@@ -329,3 +329,5 @@ function frameworkpython {
     fi
 }
 
+
+bit9 () { mv "$1" ~/reno ; ln -s ~/reno/"$1" ./"$1" ;}
