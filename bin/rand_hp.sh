@@ -1,3 +1,4 @@
+#!/bin/bash
 
 options=$(cat <<EOF
 Accio
