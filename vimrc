@@ -44,6 +44,7 @@ if has('autocmd') " newschool
 	autocmd filetype html set sw=2 sts=2 ts=2 et noai
 	autocmd filetype java set sw=2 sts=2 et ai
 	autocmd filetype python set sw=4 sts=4 et ai
+	autocmd filetype scala set sw=2 sts=2 et ai
 	autocmd filetype jade set sw=2 sts=2 et ai
 	autocmd filetype coffee set sw=2 sts=2 et ai
 	autocmd filetype swift set sw=4 sts=4 et ai
@@ -58,6 +59,7 @@ else " oldschool
 	:au BufEnter *.js set sw=2 sts=2 ts=2 et
 	:au BufEnter *.json set sw=2 sts=2 ts=2 et
 	:au BufEnter *.java set sw=2 sts=2 et ai
+	:au BufEnter *.yaml set sw=2 ts=2 et ai
 	:au BufEnter *.py set sw=4 sts=4 et ai
 	:au BufEnter *.jade set sw=2 sts=2 et ai
 	:au BufEnter *.coffee set sw=4 sts=4 et ai
