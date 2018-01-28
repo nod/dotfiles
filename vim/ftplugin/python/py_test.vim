@@ -15,7 +15,7 @@ let s:rootdir = fnamemodify(expand("<sfile>"), ":h")."/py_test/"
 " load python utility functions
 " The 'execute' and 'fn*' functions make this more robust under various
 " environments than simply using 'pyfile <filename>' would be.
-execute "pyfile ".fnameescape(s:rootdir."py_test.py")
+" execute "pyfile ".fnameescape(s:rootdir."py_test.py")
 
 
 "-------------------------------------------------------------------------
