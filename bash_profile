@@ -12,7 +12,7 @@ fi
 export LVLRBASE=$HOME/Work/lvlr
 alias lvssh="cd $LVLRBASE/dev && vagrant ssh && cd -"
 
-alias wthr="curl 'wttr.in/~leander,tx?u&n&1'"
+alias wthr="curl 'wttr.in/~leander,tx?un1'"
 
 
 # get our personal helpers
