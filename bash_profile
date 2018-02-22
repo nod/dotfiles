@@ -337,4 +337,11 @@ function myip {
 	|jq -r '.YourFuckingIPAddress'
 }
 
-bit9 () { mv "$1" ~/reno ; ln -s ~/reno/"$1" ./"$1" ;}
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/local/go/bin
+
+export PATH
+
+set -o vi
+
+test -e ~/.banner && cat ~/.banner
+
