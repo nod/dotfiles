@@ -338,7 +338,6 @@ function myip {
 }
 
 PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/local/go/bin
-
 export PATH
 
 set -o vi
