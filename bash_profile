@@ -337,3 +337,10 @@ function myip {
 	|jq -r '.YourFuckingIPAddress'
 }
 
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/local/go/bin
+export PATH
+
+set -o vi
+
+test -e ~/.banner && cat ~/.banner
+
