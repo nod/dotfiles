@@ -12,6 +12,8 @@ fi
 export LVLRBASE=$HOME/Work/lvlr
 alias lvssh="cd $LVLRBASE/dev && vagrant ssh && cd -"
 
+alias wthr="curl 'wttr.in/~leander,tx?un1'"
+
 
 # get our personal helpers
 
@@ -231,7 +233,7 @@ function sotd() {
 alias i="osascript ${APPLESCRIPT_DIR}/info.osa > /dev/null 2>&1"
 
 # mount disk image
-alias crypt_on="hdid -readonly ${dmg_loc} && cd /Volumes/Crypt/accounts"
+alias crypt_on="hdid -readonly ${dmg_loc} && cd /Volumes/Crypt"
 alias crypt_edit="hdid -readwrite ${dmg_loc} && cd /Volumes/Crypt"
 alias crypt_off="cd && hdiutil detach /Volumes/Crypt"
 
@@ -333,4 +335,12 @@ function frameworkpython {
 export GOPATH=$HOME/Work/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
+function myip {
+	curl -s 'http://ipv4.wtfismyip.com/json' \
+	|jq -r '.YourFuckingIPAddress'
+}
 
+
+test -e ~/.banner && cat ~/.banner
+
+set -o vi

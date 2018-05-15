@@ -2,6 +2,8 @@ set nocompatible " old vi is old.
 set nomodeline " do. not. want.
 set hidden "hide buffers, don't close them
 set nocursorline   " show a line where the cursor is
+set textwidth=80
+set colorcolumn=+1,120 " highlight the edges of sanity
 set title " show filename in terminal title
 set tabstop=4     " a tab is four spaces by default
 set shiftwidth=4  " number of spaces to use for autoindenting
@@ -24,9 +26,6 @@ set undolevels=1000      " use many muchos levels of undo
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set visualbell           " don't beep
 set noerrorbells         " don't beep
-" set colorcolumn=81 " highlight the edge of sanity
-set textwidth=80
-set colorcolumn=+1,120 " highlight the edge of sanity
 
 let g:netrw_list_hide= '.*\.swp$,.*\.pyc$'
 
@@ -121,4 +120,46 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+
+"since has('macunix') is buggy and annoying we can do good enough (TM) OS
+"detection on the fly with this snippet from
+
+
+" https://stackoverflow.com/questions/10139972/vim-hasmacunix-or-hasmac-do-not-work
+" has('macunix') is buggy
+let os=substitute(system('uname'), '\n', '', '')
+if os == 'Darwin' || os == 'Mac'
+	" copy to clipboard from first line to end of file
+	map <leader>xa :w !pbcopy <ENTER>
+	" copy to clipboard from current line to end of file
+	map <leader>xe 0!Gpbcopy <ENTER>u
+	" copy to clipboard current line
+	map <leader>xl 0!$pbcopy <ENTER>u
+	" copy to clipboard visually selected
+	map <leader>xv !pbcopy <ENTER>u
+	" paste from clipboard
+	" prevents https://thejh.net/misc/website-terminal-copy-paste
+	" (see also |quoteplus| and |quotestar| in vim help)
+	map \a :r !pbpaste <ENTER>
+elseif os == 'Linux'
+	" copy to clipboard from first line to end of file
+	map <leader>xa :w !xclip -i<ENTER>
+	" copy to clipboard from current line to end of file
+	map <leader>xe 0!Gxclip -i<ENTER>u
+	" copy to clipboard current line
+	map <leader>xl 0!$xclip -i <ENTER>u
+	" copy to X11 selection from current visual range
+	map <leader>xv !xclip -i<ENTER>u
+	" copy to clipboard from current visual range
+	map <leader>xc !xclip -selection clipboard -i<ENTER>u
+
+	" paste from clipboard
+	" prevents https://thejh.net/misc/website-terminal-copy-paste
+	" (see also |quoteplus| and |quotestar| in vim help)
+	map \a :r !xclip -o<ENTER>
+	map \c :r !xclip -selection clipboard -o<ENTER>
+endif
+
+
 
