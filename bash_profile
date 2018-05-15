@@ -330,4 +330,7 @@ function frameworkpython {
 }
 
 
-bit9 () { mv "$1" ~/reno ; ln -s ~/reno/"$1" ./"$1" ;}
+export GOPATH=$HOME/Work/go
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
+

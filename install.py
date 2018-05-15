@@ -1,4 +1,8 @@
+#!/usr/bin/env python
 # shameless port of https://github.com/aniero/dotfiles/blob/master/install.rb
+from __future__ import print_function
+
+
 from __future__ import print_function
 
 from glob import glob
