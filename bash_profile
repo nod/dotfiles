@@ -18,8 +18,7 @@ alias wthr="curl 'wttr.in/~leander,tx?un1'"
 # get our personal helpers
 
 LOCALBIN="~/.localbin"
-MDBPATH="~/Work/mongodb/bin"
-export PATH=$LOCALBIN:$MDBPATH:$PATH:$HOME/.bin
+export PATH=$LOCALBIN:$PATH:$HOME/.bin
 
 # get me some vim cmd line luvin
 set -o vi
@@ -32,7 +31,7 @@ if [ -e $HOME/.bash_local ]; then
 	source $HOME/.bash_local
 fi
 
-export PYTHONSTARTUP=$HOME/.pythonrc.py
+# export PYTHONSTARTUP=$HOME/.pythonrc.py
 
 # git related shellery
 export GIT_PS1_SHOWDIRTYSTATE=1
