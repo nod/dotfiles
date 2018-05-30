@@ -1,7 +1,11 @@
 #!/bin/bash
 
+# some versions of macos/osx use this instead
+if [ -x /usr/bin/dscacheutil ]; then
 dscacheutil -flushcache
+fi
 
+# before lion, and starting with high sierra we're back to this
 sudo killall -HUP mDNSResponder
 
 
