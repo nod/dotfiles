@@ -28,11 +28,11 @@ for f in glob('*'):
     src = normpath(join(getcwd(), f))
     install_sym(src, target)
 
-if 'Darwin' == system():
+# if 'Darwin' == system():
     # install a symlink to tig since we're on osx
-    target = normpath(join(home, '.bin/tig'))
-    src = normpath(join(getcwd(), 'bin/tig-osx'))
-    install_sym(src, target)
+    # target = normpath(join(home, '.bin/tig'))
+    # src = normpath(join(getcwd(), 'bin/tig-osx'))
+    # install_sym(src, target)
 
 for d in ('~/tmp', '~/.venvs'):
     d_ = expanduser(d)

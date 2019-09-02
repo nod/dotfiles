@@ -1,4 +1,15 @@
-# my custom bash goodness
+# my custom bash env
+
+# first, detect if we're mac or what
+# found snippets of this on stackoverflow
+unameish="$(uname -s)"
+case "${unameish}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
 
 # anything rc?
 if [ -e $HOME/.bashrc ]; then
@@ -12,7 +23,7 @@ fi
 export LVLRBASE=$HOME/Work/lvlr
 alias lvssh="cd $LVLRBASE/dev && vagrant ssh && cd -"
 
-alias wthr="curl 'wttr.in/~leander,tx?un1'"
+alias wthr="curl 'wttr.in/~cedar+park,tx?un1'"
 
 
 # get our personal helpers
@@ -27,6 +38,7 @@ set -o vi
 if [ -e $HOME/.secrets/secrets ]; then
 	source $HOME/.secrets/secrets
 fi
+
 if [ -e $HOME/.bash_local ]; then
 	source $HOME/.bash_local
 fi
@@ -343,3 +355,17 @@ function myip {
 test -e ~/.banner && cat ~/.banner
 
 set -o vi
+
+
+
+# mac specific stuff
+if [ $machine == "Mac" ]; then
+    alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
+    export PATH="$HOME/.macbin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
