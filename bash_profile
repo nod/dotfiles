@@ -25,6 +25,11 @@ alias lvssh="cd $LVLRBASE/dev && vagrant ssh && cd -"
 
 alias wthr="curl 'wttr.in/~cedar+park,tx?un1'"
 
+function mkcd {
+    newdir=$1
+    mkdir -p $newdir
+    cd $newdir
+}
 
 # get our personal helpers
 
@@ -121,7 +126,7 @@ alias colorslist="set | egrep 'COLOR_\w*'" # Lists all colors
 alias l="ls -lrtF"
 alias ll="ls -lF"
 
-alias scratch="source ~/.venvs/scratch/bin/activate"
+alias scratch="source ~/.scratch/bin/activate"
 
 # pip command line completion is nice too
 # which pip >/dev/null 2>&1 && eval "`pip completion --bash`"
