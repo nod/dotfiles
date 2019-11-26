@@ -367,6 +367,9 @@ set -o vi
 if [ $machine == "Mac" ]; then
     alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
     export PATH="$HOME/.macbin:$PATH"
+
+    alias fixinkscape='wmctrl -r Inkscape -e 0,2560,1440,1280,800'
+    alias fixinkscapeExt='wmctrl -r Inkscape -e 0,0,0,1024,1024'
 fi
 
 # set PATH so it includes user's private bin if it exists
