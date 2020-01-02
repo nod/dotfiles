@@ -1,4 +1,4 @@
-tell application "iTunes"
+tell application "Music"
   if player state is playing then
     -- get track, artist and album
     set currtrack to the name of current track
