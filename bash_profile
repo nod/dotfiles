@@ -32,7 +32,6 @@ function mkcd {
 }
 
 # get our personal helpers
-
 LOCALBIN="~/.localbin"
 export PATH=$LOCALBIN:$PATH:$HOME/.bin
 
@@ -359,9 +358,9 @@ function myip {
 
 test -e ~/.banner && cat ~/.banner
 
+# vi goodness is good
 set -o vi
-
-
+export EDITOR=`which vi`
 
 # mac specific stuff
 if [ $machine == "Mac" ]; then

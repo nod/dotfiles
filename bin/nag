@@ -4,6 +4,22 @@ mins=$1
 shift 1
 text="$@"
 
-sleep $((mins * 60))
+while [ $mins -gt 0 ] ; do
+echo mins left: $mins
+sleep 60
+mins=$(( $mins - 1 ))
+done
+
+# sleep $((mins * 60))
+
+ww=$(which osascript)
+
+if [[ ! -z $ww ]]; then
+    osascript -e "display notification \"${text}\" with title \"nagging you\""
+fi
+
 say "${text}"
+
+
+
 
