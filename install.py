@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # shameless port of https://github.com/aniero/dotfiles/blob/master/install.rb
-from __future__ import print_function
-
 
 from __future__ import print_function
 
@@ -10,7 +8,6 @@ from os import environ, getcwd, symlink, makedirs
 from os.path import exists, expanduser, join, normpath
 from platform import system
 from sys import stderr
-
 
 home = expanduser(environ['HOME'])
 
@@ -22,7 +19,7 @@ def install_sym(src, target):
         symlink(src, target)
 
 for f in glob('*'):
-    if any((f.startswith(x) for x in ('tig', 'README', 'install', 'tags'))):
+    if any((f.startswith(x) for x in ('nope', 'README', 'install', 'tags'))):
         continue
     target = normpath(join(home, '.%s'%f))
     src = normpath(join(getcwd(), f))

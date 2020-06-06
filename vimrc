@@ -106,8 +106,8 @@ map <C-l> <C-W>l<C-W>
 
 nmap <C-j> :%!jq .<cr>
 
-filetype plugin indent on
-syntax on
+" filetype plugin indent on
+syntax enable
 
 " dont let color schemes override bg color of term
 hi Normal ctermbg=none
@@ -162,4 +162,23 @@ elseif os == 'Linux'
 endif
 
 
+
+" some plugin junk
+" don't forget to :PlugInstall after changing these
+call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+call plug#end()
+
+" setup airline
+set t_Co=256
+let g:airline_powerline_fonts=1
+let g:airline_theme='molokai' " murmur
+let g:airline_section_z="%3p%% %#__accent_bold#%{g:airline_symbols.linenr}%4l%#__restore__#%#__accent_bold#/%L%#__restore__# :%3v"
+let g:airline#extensions#branch#enabled=1
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
 
