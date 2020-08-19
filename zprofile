@@ -19,6 +19,12 @@ fi
 
 
 # ##############################################
+# get my shared helpers if they exist
+if [[ -d $HOME/.bin ]]; then
+	export PATH=$HOME/.bin:$PATH
+fi
+
+# ##############################################
 # get our personal helpers if they exist
 if [[ -d $HOME/.localbin ]]; then
 	export PATH=$HOME/.localbin:$PATH
