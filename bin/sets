@@ -1,0 +1,95 @@
+#!/usr/bin/env python3
+
+# set work from the cmdline
+# can tell intersection and difference from multiple files
+#
+# simple usage:
+#   sets intersection file1 file2
+#
+# regex usage:
+#   This would extract all values that match the regex and preserve the group.
+#   sets intersection --regex "blah(x.+)" file1 file2
+#
+# there are conveniences builtin also
+# - sets i file1 file2 <- same as `sets intersection`
+# - sets i - file2  <- one of the inputs will be stdin
+# - sets d file1 file2  <- difference of inputs
+# - sets d -r "(feh)"
+
+import re
+import sys
+from functools import reduce
+
+
+def intersection(inps):
+    return reduce(lambda a,b: a.intersection(b), inps) if inps else []
+
+
+def difference(inps):
+    return reduce(lambda a,b: a.symmetric_difference(b), inps) if inps else []
+
+
+def fetch_inputs(args):
+    inputs = []
+    if args.regex:
+        re_find = re.compile(args.regex)
+    else: re_find = None
+    # now read from file handles or file names
+    for f in (args.f or []) + (args.inputs or []):
+        try:
+            inf = open(f, 'r')
+        except:
+            raise Exception("unable to open: {}".format(f))
+        if re_find:
+            s = set()
+            for x in inf.readlines():
+                found = re_find.findall(x)
+                for f in found: s.add(f)
+        else:
+            s = set([x.strip() for x in inf.readlines()])
+        if s: inputs.append( s )
+    return inputs
+
+
+def parse_cmd_line():
+    import argparse
+    parser = argparse.ArgumentParser(description='set operations')
+    cmds = parser.add_subparsers(dest='cmd')
+
+    cmd_int = cmds.add_parser('intersection',
+        aliases = ('i', 'int'),
+        help='intersection of inputs')
+    cmd_dif = cmds.add_parser('difference',
+        aliases = ('d', 'dif'),
+        help='difference of inputs')
+
+    for c in (cmd_int, cmd_dif):
+        c.add_argument('-', dest='f', action='append_const', const=0,
+            help="read stdin as one of the inputs")
+        c.add_argument('-r', '--regex', type=str,
+            help='extract regex group and use that')
+        c.add_argument('inputs', metavar='N', type=str, nargs='*',
+            help='input files to work on')
+    return parser.parse_args()
+
+
+def main():
+    args = parse_cmd_line()
+    cmds = {
+        'intersection' : intersection,
+        'difference' : difference,
+        }
+    found_cmd = None
+    for k in cmds:
+        if k.startswith(args.cmd):
+            if found_cmd: raise SystemExit("ERR: ambiguous subcommand")
+            found_cmd = k
+    if found_cmd not in cmds:
+        raise SystemExit("ERR unknown subcommand")
+    inps = fetch_inputs(args)
+    for line in cmds[found_cmd](inps):
+        print(line)
+
+if __name__ == '__main__':
+    main()
+
