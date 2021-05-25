@@ -22,7 +22,7 @@ def add_upper(word):
     not_done = True
     ss = list(word)
     while not_done:
-        x = randint(0,len(ss))
+        x = randint(0,len(ss)-1)
         if ss[x] in letters:
             ss[x] = ss[x].upper()
             not_done = False
@@ -31,13 +31,10 @@ def add_upper(word):
 
 def genphrase():
     words = choose_words()
-    # print ' '.join(words)
-    sep = '-'
-    x = randint(0,len(words)-1)
-    # words[x] = words[x].replace(choice(words[x]), choice(words)[0].upper())
-    anchor = add_upper(choice('-').join(words))
+    seps = '-~.'
+    anchor = add_upper(choice(seps).join(words))
     print (
-        anchor + '.' + str(randint(44, 1500))
+        anchor + choice(seps) + str(randint(44, 9999))
         )
 
 if __name__ == '__main__':
