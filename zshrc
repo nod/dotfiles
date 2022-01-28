@@ -1,14 +1,19 @@
 # interactive setup
 
-# ################################################
+# load custom executable functions
+for function in ~/.zsh/functions/*; do
+  source $function
+done
 
-source ~/.scriptdir/shell_funcs
+_load_settings "$HOME/.zsh/configs"
 
-export ZSH_THEME_GIT_PROMPT_CACHE=1
-source ~/.scriptdir/zsh-git/zshrc.sh
+# Local config
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
-export PROMPT='%F{blue}%m:%f%F{green}%1~%b$(git_super_status)%F{blue}$%f '
+# aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
 
 # ################################################
 # vim mode because reasons
 set -o vi
+
