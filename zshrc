@@ -69,9 +69,7 @@ preexec_functions+='preexec_update_git_vars'
 precmd_functions+='precmd_update_git_vars'
 chpwd_functions+='chpwd_update_git_vars'
 
-# PROMPT=$'%{${fg[cyan]}%}%B%~%b$(prompt_git_info)%{${fg[default]}%} '
 PROMPT='%{$fg_bold[green]%}%n@%m:%{$fg_bold[blue]%}%c%{$reset_color%}$(prompt_git_info) %# '
-
 
 # ################################################
 # vim mode because reasons
