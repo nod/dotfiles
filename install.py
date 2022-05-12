@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # shameless port of https://github.com/aniero/dotfiles/blob/master/install.rb
 
 from __future__ import print_function

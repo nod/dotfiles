@@ -39,6 +39,10 @@ fi
 
 # interactive setup
 
+# load funcs
+fpath=(~/.zsh/auto $fpath)
+autoload -U ~/.zsh/auto/*(:t)
+
 # load custom executable functions
 for function in ~/.zsh/functions/*; do
   source $function
@@ -52,10 +56,21 @@ _load_settings "$HOME/.zsh/configs"
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
 
+autoload -U colors
+colors
 
-# ################################################
-# autocomplete
-autoload -Uz compinit; compinit; _comp_options+=(globdots;
+setopt PROMPT_SUBST
+
+typeset -ga preexec_functions
+typeset -ga precmd_functions
+typeset -ga chpwd_functions
+
+preexec_functions+='preexec_update_git_vars'
+precmd_functions+='precmd_update_git_vars'
+chpwd_functions+='chpwd_update_git_vars'
+
+# PROMPT=$'%{${fg[cyan]}%}%B%~%b$(prompt_git_info)%{${fg[default]}%} '
+PROMPT='%{$fg_bold[green]%}%n@%m:%{$fg_bold[blue]%}%c%{$reset_color%}$(prompt_git_info) %# '
 
 
 # ################################################
