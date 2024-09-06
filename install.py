@@ -19,7 +19,7 @@ def install_sym(src, target):
         symlink(src, target)
 
 for f in glob('*'):
-    if any((f.startswith(x) for x in ('nope', 'README', 'install', 'tags'))):
+    if any((f.startswith(x) for x in ('nope', 'README', 'install', 'tags', 'archive'))):
         continue
     target = normpath(join(home, '.%s'%f))
     src = normpath(join(getcwd(), f))

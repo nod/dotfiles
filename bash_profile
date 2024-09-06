@@ -20,13 +20,11 @@ if [ -e $HOME/.env ]; then
 	source $HOME/.env
 fi
 
-export LVLRBASE=$HOME/Work/lvlr
-alias lvssh="cd $LVLRBASE/dev && vagrant ssh && cd -"
-
 alias wthr="curl 'wttr.in/~cedar+park,tx?un1'"
 
-function mkcd {
-    newdir=$1
+function mcd {
+    newdt=`date "+%Y%M%d"`
+    newdir=`echo tmpdir-${newdt}-${RANDOM}`
     mkdir -p $newdir
     cd $newdir
 }
@@ -34,6 +32,7 @@ function mkcd {
 # get our personal helpers
 LOCALBIN="~/.localbin"
 export PATH=$LOCALBIN:$PATH:$HOME/.bin
+export PATH=$LOCALBIN:$PATH:$HOME/.bin:/opt/homebrew/bin
 
 # get me some vim cmd line luvin
 set -o vi
@@ -67,8 +66,8 @@ prompt_command() {
     local BMAGENTA="\[\033[1;35m\]"
     local BCYAN="\[\033[1;36m\]"
     local BWHITE="\[\033[1;37m\]"
-	local DARKGRAY="\[\033[01;34m\]"
-	local BOLDGRAY="\[\033[01;31m\]"
+    local DARKGRAY="\[\033[01;34m\]"
+    local BOLDGRAY="\[\033[01;31m\]"
     local DEFAULT="\[\033[0;39m\]"
 
 	if [ $(type -t __git_ps1) ]; then
@@ -95,8 +94,8 @@ export PS1='$( if [ $UID != 0 ]; then echo -n "\[\033[01;32m\]" ; else echo -n "
 
 
 alias sr="sudo bash --login "
-alias hilite='egrep -e"" --color=auto -e'
-alias r='rsync -a --progress --partial'
+alias hil='egrep -e"" --color=auto -e'
+alias rs='rsync -a --progress --partial'
 alias nth='open -a Terminal.app .'
 
 # Setup some colors to use later in interactive shell or scripts
@@ -165,10 +164,6 @@ export TZ=CST6CDT
 
 export APPLESCRIPT_DIR=$HOME/.applescripts
 
-# alias mvim="open -a MacVim"
-
-alias gitx="open -a GitX"
-
 # itunes related aliases
 alias np="osascript ${APPLESCRIPT_DIR}/nowplaying.osa"
 alias npp="osascript ${APPLESCRIPT_DIR}/nowplaying.osa|pbcopy && pbpaste"
@@ -197,7 +192,7 @@ function human() {
 	billion=1000000000
 	trillion=1000000000000
 
- # add commas to numeric strings, changing "1234567" to "1,234,567"
+	# add commas to numeric strings, changing "1234567" to "1,234,567"
 	commaized=`echo $val | sed -e :a -e 's/\(.*[0-9]\)\([0-9]\{3\}\)/\1,\2/;ta'`
 
 	scale=$trillion
@@ -246,11 +241,6 @@ function sotd() {
 
 # give me a "show info" from teh cmd line
 alias i="osascript ${APPLESCRIPT_DIR}/info.osa > /dev/null 2>&1"
-
-# mount disk image
-alias crypt_on="hdid -readonly ${dmg_loc} && cd /Volumes/Crypt"
-alias crypt_edit="hdid -readwrite ${dmg_loc} && cd /Volumes/Crypt"
-alias crypt_off="cd && hdiutil detach /Volumes/Crypt"
 
 alias irc="ssh -t ${IRCHOST} screen -rd irc"
 
@@ -392,3 +382,4 @@ else
 fi
 unset __conda_setup
 # <<< conda init <<<
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
