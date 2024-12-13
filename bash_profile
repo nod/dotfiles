@@ -32,7 +32,7 @@ function mcd {
 # get our personal helpers
 LOCALBIN="~/.localbin"
 export PATH=$LOCALBIN:$PATH:$HOME/.bin
-export PATH=$LOCALBIN:$PATH:$HOME/.bin:/opt/homebrew/bin
+export PATH=$LOCALBIN:$HOME/.bin:/opt/homebrew/bin:$PATH
 
 # get me some vim cmd line luvin
 set -o vi
