@@ -113,7 +113,7 @@ syntax enable
 hi Normal ctermbg=none
 highlight ColorColumn ctermbg=236
 
-" trailing whitespace kills puppies
+" trailing whitespace is bad
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
@@ -121,6 +121,8 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
+" kill trailing spaces
+map <leader>kts :%s/\s\+$//g<ENTER>
 
 "since has('macunix') is buggy and annoying we can do good enough (TM) OS
 "detection on the fly with this snippet from

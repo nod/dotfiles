@@ -23,10 +23,13 @@ fi
 alias wthr="curl 'wttr.in/~cedar+park,tx?un1'"
 
 function mcd {
-    newdt=`date "+%Y%M%d"`
-    newdir=`echo tmpdir-${newdt}-${RANDOM}`
-    mkdir -p $newdir
-    cd $newdir
+	dest=$1
+	if [ -z $dest ]; then
+		newdt=`date "+%Y%M%d"`
+		dest=`echo tmpdir-${newdt}-${RANDOM}`
+	fi
+    mkdir -p $dest
+    cd $dest
 }
 
 # get our personal helpers
